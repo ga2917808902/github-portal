@@ -17,7 +17,9 @@
 		<div class="dropdown-content">
 			<a href="/lang/">Ngôn ngữ</a> <br /> 
 			<a href="/category/">Loại</a> <br /> 
-			<a href="/book-cover/">Trang bìa</a>
+			<a href="/book-cover/">Trang bìa</a><br/>
+			<a href="/publishing/">Nhà xuất bản</a><br/>
+			<a href="/branch/">Chuyên ngành</a>
 		</div>
 	</div>
 </body>

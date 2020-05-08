@@ -45,7 +45,7 @@
 						<h4 id="ModalTitle"></h4>
 					</div>
 					<div class="modal-body">
-						<form:form action="publishing/save" method="post" modelAttribute="publishing"
+						<form:form action="branch/save" method="post" modelAttribute="branch"
 							id="form">
 							<fieldset id="SubmitForm">
 								<label>ID</label>
@@ -65,7 +65,7 @@
 			</div>
 		</div>
 		<div class="container" style="margin-top: 3%">
-			<button class="btn btn-info" onclick="newPublishing();">Thêm mới</button>
+			<button class="btn btn-info" onclick="newBranch();">Thêm mới</button>
 			<br /> <br />
 			<table class="table table-striped">
 				<thead>
@@ -74,14 +74,14 @@
 						<th>Name</th>
 					</tr>
 				</thead>
-				<c:forEach var="publishing" items="${listPublishings }">
+				<c:forEach var="branch" items="${listBranchs }">
 					<tr>
-						<td>${publishing.id }</td>
-						<td>${publishing.name }</td>
+						<td>${branch.id }</td>
+						<td>${branch.name }</td>
 						<td><button class="btn btn-warning"
-								onclick="editPublishing(${publishing.id});">Sửa</button></td>
+								onclick="editBranch(${branch.id});">Sửa</button></td>
 						<td><button class="btn btn-danger"
-								onclick="deletePublishing(${publishing.id});">Xóa</button></td>
+								onclick="deleteBranch(${branch.id});">Xóa</button></td>
 					</tr>
 
 				</c:forEach>
@@ -93,17 +93,17 @@
 
 	<script>
 		//mở popup
-		function newPublishing() {
+		function newBranch() {
 			document.getElementById("form").reset();
-			$("#ModalTitle").html("Thêm mới nhà xuất bản");
+			$("#ModalTitle").html("Thêm mới ngành");
 			$("#MyModal").modal();
 		}
 		
 		//edit
-		function editPublishing(id){
-			$("#ModalTitle").html("Cập nhật nhà xuất bản");
+		function editBranch(id){
+			$("#ModalTitle").html("Cập nhật ngành");
 			$("#MyModal").modal();
-			var url = "/publishing/edit/" + id;
+			var url = "/branch/edit/" + id;
 			$.getJSON(url, function(data){
 				$("#id").val(data.id);
 				$("#name").val(data.name);
@@ -111,12 +111,12 @@
 		}
 		
 		//delete
-		function deletePublishing(id){
+		function deleteBranch(id){
 			$.ajax({
 				type: "GET",
-				url : "/publishing/delete/" + id,
+				url : "/branch/delete/" + id,
 				success: function(data){
-					window.location.href = "http://localhost:8080/publishing/";
+					window.location.href = "http://localhost:8080/branch/";
 				}
 			})
 		}
