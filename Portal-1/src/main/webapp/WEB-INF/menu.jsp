@@ -1,0 +1,24 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8" isELIgnored="false"%>
+<%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<base href="${pageContext.servletContext.contextPath}/">
+<link rel="stylesheet" type="text/css"
+	href="../resources/css/dropdown.css" />
+<title>Insert title here</title>
+</head>
+<body>
+	<a href="/">Trang chủ</a> |
+	<div class="dropdown">
+		<a><span>Quản lý</span></a>
+		<div class="dropdown-content">
+			<a href="/lang/">Ngôn ngữ</a> <br /> 
+			<a href="/category/">Loại</a> <br /> 
+			<a href="/book-cover/">Trang bìa</a>
+		</div>
+	</div>
+</body>
+</html>
