@@ -13,8 +13,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.portal.models.Branch;
+import com.portal.models.Category;
 import com.portal.services.BranchService;
+import com.portal.services.CategoryService;
 
 @Controller
 @RequestMapping("branch")
@@ -23,10 +27,14 @@ public class BranchController {
 	@Autowired
 	BranchService service;
 	
+	@Autowired
+	CategoryService categoryService;
+	
 	@GetMapping(value = {"index", "/"})
-	public String index(ModelMap model) {
+	public String index(ModelMap model) throws JsonProcessingException {
 		List<Branch> listBranchs = service.findAll();
-		model.addAttribute("listBranchs", listBranchs);
+		ObjectMapper mapper = new ObjectMapper();
+		model.addAttribute("listBranchs", mapper.writeValueAsString(listBranchs));
 		model.addAttribute("branch", new Branch());
 		
 		return "branch/index";
@@ -49,5 +57,10 @@ public class BranchController {
 		service.delete(id);
 		
 		return "redirect:/branch/";
+	}
+	
+	@ModelAttribute("categories")
+	public List<Category> listCategories(){
+		return categoryService.findAll();
 	}
 }

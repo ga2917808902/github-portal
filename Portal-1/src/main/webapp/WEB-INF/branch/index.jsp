@@ -14,6 +14,10 @@
 <link href="../resources/bootstrap/bootstrap.min.css" rel="stylesheet"
 	type="text/css" />
 <link rel="stylesheet" type="text/css"
+	href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8"
+	src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+<link rel="stylesheet" type="text/css"
 	href="../resources/css/layout.css" />
 <style>
 /* Modal Content */
@@ -45,8 +49,8 @@
 						<h4 id="ModalTitle"></h4>
 					</div>
 					<div class="modal-body">
-						<form:form action="branch/save" method="post" modelAttribute="branch"
-							id="form">
+						<form:form action="branch/save" method="post"
+							modelAttribute="branch" id="form">
 							<fieldset id="SubmitForm">
 								<label>ID</label>
 								<form:input path="id" readonly="true" />
@@ -55,8 +59,9 @@
 									<form:input path="name" />
 								</div>
 								<div class="form-group">
-									<label>Branch</label>
-									<form:input path="category" />
+									<label>Category</label>
+									<form:select path="category" items="${categories }"
+										itemLabel="name" itemValue="id" />
 								</div>
 								<div class="form-group">
 									<button class="btn btn-block btn-danger" id="save">
@@ -68,29 +73,20 @@
 				</div>
 			</div>
 		</div>
-		<div class="container" style="margin-top: 3%">
+		<div class="container" style="margin-top: 2%">
 			<button class="btn btn-info" onclick="newBranch();">Thêm mới</button>
 			<br /> <br />
-			<table class="table table-striped">
-				<thead>
-					<tr>
-						<th>ID</th>
-						<th>Name</th>
-					</tr>
-				</thead>
-				<c:forEach var="branch" items="${listBranchs }">
-					<tr>
-						<td>${branch.id }</td>
-						<td>${branch.name }</td>
-						<td>${branch.category.name }</td>
-						<td><button class="btn btn-warning"
-								onclick="editBranch(${branch.id});">Sửa</button></td>
-						<td><button class="btn btn-danger"
-								onclick="deleteBranch(${branch.id});">Xóa</button></td>
-					</tr>
-
-				</c:forEach>
-			</table>
+			<div style="width: 1200px">
+				<table id="myTable" border="1">
+					<thead>
+						<tr>
+							<th>Chuyên ngành</th>
+							<th>Loại sách</th>
+							<th></th>
+						</tr>
+					</thead>
+				</table>
+			</div>
 		</div>
 
 		<footer>FOOTER</footer>
@@ -103,28 +99,49 @@
 			$("#ModalTitle").html("Thêm mới ngành");
 			$("#MyModal").modal();
 		}
-		
+
 		//edit
-		function editBranch(id){
+		function editBranch(id) {
 			$("#ModalTitle").html("Cập nhật ngành");
 			$("#MyModal").modal();
 			var url = "/branch/edit/" + id;
-			$.getJSON(url, function(data){
+			$.getJSON(url, function(data) {
 				$("#id").val(data.id);
 				$("#name").val(data.name);
+				$("#category").val(data.category.id);
 			});
 		}
-		
+
 		//delete
-		function deleteBranch(id){
+		function deleteBranch(id) {
 			$.ajax({
-				type: "GET",
+				type : "GET",
 				url : "/branch/delete/" + id,
-				success: function(data){
+				success : function(data) {
 					window.location.href = "http://localhost:8080/branch/";
 				}
 			})
 		}
+		//Datatable
+		$(document).ready(function(){
+			var data = eval('${listBranchs}');
+			$('#myTable').DataTable({
+				aaData : data,
+				aoColumns : [
+					{data: "name"},
+					{data: "category.name"},
+					{
+						data: "id", 
+						mRender: function(data){
+							var str = '';
+							str += '<button onClick="editBranch(' + data + ')" class="btn btn-warning">Sửa</button>' + ' ';
+							str += '<button onClick="deleteBranch(' + data + ')" class="btn btn-danger">Xóa</button>';
+							return str;
+						}	
+					},
+				]
+			});
+		});
 	</script>
 </body>
 </html>

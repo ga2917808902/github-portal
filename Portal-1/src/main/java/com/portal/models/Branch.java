@@ -8,6 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 public class Branch {
 
@@ -17,6 +19,7 @@ public class Branch {
 	private String name;
 	@ManyToOne
 	@JoinColumn(name = "category_id")
+	@JsonIgnoreProperties(value = {"branch"}, allowSetters=true)
 	private Category category;
 	
 	public Branch() {}

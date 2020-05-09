@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.portal.models.Author;
 import com.portal.services.AuthorService;
 
@@ -24,9 +26,10 @@ public class AuthorController {
 	AuthorService service;
 	
 	@GetMapping(value = {"index", "/"})
-	public String index(ModelMap model) {
+	public String index(ModelMap model) throws JsonProcessingException {
 		List<Author> listAuthors = service.findAll();
-		model.addAttribute("listAuthors", listAuthors);
+		ObjectMapper mapper = new ObjectMapper();
+		model.addAttribute("listAuthors", mapper.writeValueAsString(listAuthors));
 		model.addAttribute("author", new Author());
 		
 		return "author/index";

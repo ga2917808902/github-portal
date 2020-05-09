@@ -15,6 +15,10 @@
 	type="text/css" />
 <link rel="stylesheet" type="text/css"
 	href="../resources/css/layout.css" />
+<link rel="stylesheet" type="text/css"
+	href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8"
+	src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
 <style>
 /* Modal Content */
 .modal-content {
@@ -45,8 +49,8 @@
 						<h4 id="ModalTitle"></h4>
 					</div>
 					<div class="modal-body">
-						<form:form action="author/save" method="post" modelAttribute="author"
-							id="form">
+						<form:form action="author/save" method="post"
+							modelAttribute="author" id="form">
 							<fieldset id="SubmitForm">
 								<label>ID</label>
 								<form:input path="id" readonly="true" />
@@ -68,30 +72,20 @@
 				</div>
 			</div>
 		</div>
-		<div class="container" style="margin-top: 3%">
+		<div class="container" style="margin-top: 2%">
 			<button class="btn btn-info" onclick="newAuthor();">Thêm mới</button>
 			<br /> <br />
-			<table class="table table-striped">
-				<thead>
-					<tr>
-						<th>ID</th>
-						<th>Name</th>
-						<th>Note</th>
-					</tr>
-				</thead>
-				<c:forEach var="author" items="${listAuthors }">
-					<tr>
-						<td>${author.id }</td>
-						<td>${author.name }</td>
-						<td>${author.note }</td>
-						<td><button class="btn btn-warning"
-								onclick="editAuthor(${author.id});">Sửa</button></td>
-						<td><button class="btn btn-danger"
-								onclick="deleteAuthor(${author.id});">Xóa</button></td>
-					</tr>
-
-				</c:forEach>
-			</table>
+			<div style="width: 1200px">
+				<table id="myTable" border="1">
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th>Note</th>
+							<th></th>
+						</tr>
+					</thead>
+				</table>
+			</div>
 		</div>
 
 		<footer>FOOTER</footer>
@@ -104,29 +98,50 @@
 			$("#ModalTitle").html("Thêm mới tác giả");
 			$("#MyModal").modal();
 		}
-		
+
 		//edit
-		function editAuthor(id){
+		function editAuthor(id) {
 			$("#ModalTitle").html("Cập nhật tác giả");
 			$("#MyModal").modal();
 			var url = "/author/edit/" + id;
-			$.getJSON(url, function(data){
+			$.getJSON(url, function(data) {
 				$("#id").val(data.id);
 				$("#name").val(data.name);
 				$("#note").val(data.note);
 			});
 		}
-		
+
 		//delete
-		function deleteAuthor(id){
+		function deleteAuthor(id) {
 			$.ajax({
-				type: "GET",
-				url: "/author/delete/" + id,
-				success: function(data){
+				type : "GET",
+				url : "/author/delete/" + id,
+				success : function(data) {
 					window.location.href = "http://localhost:8080/author/";
 				}
 			})
 		}
+		
+		//Datatable
+		$(document).ready(function(){
+			var data = eval('${listAuthors}');
+			$('#myTable').DataTable({
+				aaData : data,
+				aoColumns : [
+					{data: "name"},
+					{data: "note"},
+					{
+						data: "id", 
+						mRender: function(data){
+							var str = '';
+							str += '<button onClick="editAuthor(' + data + ')" class="btn btn-warning">Sửa</button>' + ' ';
+							str += '<button onClick="deleteAuthor(' + data + ')" class="btn btn-danger">Xóa</button>';
+							return str;
+						}	
+					},
+				]
+			});
+		});
 	</script>
 </body>
 </html>
