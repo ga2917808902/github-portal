@@ -55,6 +55,10 @@
 									<form:input path="name" />
 								</div>
 								<div class="form-group">
+									<label>Branch</label>
+									<form:input path="category" />
+								</div>
+								<div class="form-group">
 									<button class="btn btn-block btn-danger" id="save">
 										Save</button>
 								</div>
@@ -78,6 +82,7 @@
 					<tr>
 						<td>${branch.id }</td>
 						<td>${branch.name }</td>
+						<td>${branch.category.name }</td>
 						<td><button class="btn btn-warning"
 								onclick="editBranch(${branch.id});">Sửa</button></td>
 						<td><button class="btn btn-danger"

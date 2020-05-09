@@ -1,9 +1,12 @@
 package com.portal.models;
 
+import java.util.Collection;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Category {
@@ -12,6 +15,8 @@ public class Category {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String name;
+	@OneToMany(mappedBy = "category")
+	private Collection<Branch> branch;
 
 	public Category() {
 	}
@@ -30,5 +35,13 @@ public class Category {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public Collection<Branch> getBranch() {
+		return branch;
+	}
+
+	public void setBranch(Collection<Branch> branch) {
+		this.branch = branch;
 	}
 }
