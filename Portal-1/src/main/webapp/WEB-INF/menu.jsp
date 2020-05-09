@@ -15,12 +15,13 @@
 	<div class="dropdown">
 		<a><span>Quản lý</span></a>
 		<div class="dropdown-content">
-			<a href="/lang/">Ngôn ngữ</a> <br /> 
+			<a href="/book/">Sách</a> <br /> 
 			<a href="/category/">Loại</a> <br /> 
 			<a href="/book-cover/">Trang bìa</a><br/>
 			<a href="/publishing/">Nhà xuất bản</a><br/>
 			<a href="/branch/">Chuyên ngành</a><br/>
 			<a href="/author/">Tác giả</a><br/>
+			<a href="/lang/">Ngôn ngữ</a>
 		</div>
 	</div>
 </body>

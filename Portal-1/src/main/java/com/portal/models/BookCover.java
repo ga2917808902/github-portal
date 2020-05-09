@@ -1,9 +1,12 @@
 package com.portal.models;
 
+import java.util.Collection;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -14,7 +17,8 @@ public class BookCover {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String name;
-
+	@OneToMany(mappedBy = "bookCover")
+	private Collection<Book> book;
 	public BookCover() {
 	}
 
