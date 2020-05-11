@@ -137,17 +137,6 @@
 			$("#MyModal").modal();
 		}
 		
-		//Thêm author từ popup qua table author
-		function moveToAuthor(id){
-			$.ajax({
-				type: "GET",
-				url: "/book/transfer-data/" + id,
-				success: function(data){
-					window.location.href = "http://localhost:8080/book/edit/" + id;
-				}
-			})
-		}
-		
 		//Datatable author ngoài popup
 		$(document).ready(function(){
 			var listData = eval('${listAuthors}');
