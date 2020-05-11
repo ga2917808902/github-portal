@@ -1,9 +1,12 @@
 package com.portal.models;
 
+import java.util.Collection;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Author {
@@ -13,8 +16,12 @@ public class Author {
 	private int id;
 	private String name;
 	private String note;
+	@OneToMany(mappedBy = "author")
+	private Collection<BookAuthor> bookAuthor;
 	
 	public Author() {}
+	
+	public Author(int id) {this.id=id;}
 	
 	public int getId() {
 		return id;

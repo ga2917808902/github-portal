@@ -41,59 +41,8 @@
 			<jsp:include page="../menu.jsp" />
 		</nav>
 		<br />
-		<div class="modal fade" id="MyModal">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">
-						<a href="#" class="close" data-dismiss="modal">&times;</a>
-						<h4 id="ModalTitle"></h4>
-					</div>
-					<div class="modal-body">
-						<form:form action="book/save" method="post"
-							modelAttribute="book" id="form">
-							<fieldset id="SubmitForm">
-								<label>ID</label>
-								<form:input path="id" readonly="true" />
-								<div class="form-group">
-									<label>Tên sách</label>
-									<form:input path="name" />
-								</div>
-								<div class="form-group">
-									<label>Giá</label>
-									<form:input path="price" />
-								</div>
-								<div class="form-group">
-									<label>Ghi chú</label>
-									<form:textarea path="note" />
-								</div>
-								<div class="form-group">
-									<label>Nhà xuất bản</label>
-									<form:select path="publishing" items="${publishings }" itemLabel="name" itemValue="id"/>
-								</div>
-								<div class="form-group">
-									<label>Ngành</label>
-									<form:select path="branch" items="${branchs }" itemLabel="name" itemValue="id"/>
-								</div>
-								<div class="form-group">
-									<label>Bìa</label>
-									<form:select path="bookCover" items="${bookCovers }" itemLabel="name" itemValue="id"/>
-								</div>
-								<div class="form-group">
-									<label>Ngôn ngữ</label>
-									<form:select path="language" items="${languages }" itemLabel="name" itemValue="id"/>
-								</div>
-								<div class="form-group">
-									<button class="btn btn-block btn-danger" id="save">
-										Save</button>
-								</div>
-							</fieldset>
-						</form:form>
-					</div>
-				</div>
-			</div>
-		</div>
 		<div class="container" style="margin-top: 2%">
-			<button class="btn btn-info" onclick="newBook();">Thêm mới</button>
+			<a class="btn btn-info" href="/book/new">Thêm mới</a>
 			<br /> <br />
 			<div style="width: 1200px">
 				<table id="myTable" border="1">
@@ -118,26 +67,6 @@
 	</div>
 
 	<script>
-		//mở popup
-		function newBook() {
-			document.getElementById("form").reset();
-			$("#ModalTitle").html("Thêm mới sách");
-			$("#MyModal").modal();
-		}
-
-		//edit
-		function editBook(id) {
-			$("#ModalTitle").html("Cập nhật sách");
-			$("#MyModal").modal();
-			var url = "/book/edit/" + id;
-			$.getJSON(url, function(data) {
-				$("#id").val(data.id);
-				$("#name").val(data.name);
-				$("#price").val(data.price);
-				$("#note").val(data.note);
-			});
-		}
-
 		//delete
 		function deleteBook(id) {
 			$.ajax({
@@ -167,8 +96,9 @@
 						data: "id", 
 						mRender: function(data){
 							var str = '';
-							str += '<button onClick="editBook(' + data + ')" class="btn btn-warning">Sửa</button>' + ' ';
-							str += '<button onClick="deleteBook(' + data + ')" class="btn btn-danger">Xóa</button>';
+							str += '<a href="/image-book/view/' + data + '" class="btn btn-info">Xem ảnh</a>' + ' ';
+							str += '<a href="/book/edit/' + data + '" class="btn btn-warning">Sửa</a>' + ' ';
+							str += '<a onClick="deleteBook(' + data + ')" class="btn btn-danger">Xóa</a>';
 							return str;
 						}	
 					},

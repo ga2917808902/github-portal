@@ -1,6 +1,7 @@
 package com.portal.models;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -34,10 +36,18 @@ public class Book {
 	@ManyToOne
 	@JoinColumn(name = "lang_id")
 	private Language language;
+	@OneToMany(mappedBy = "book")
+	private Collection<ImageBook> imageBook;
+	@OneToMany(mappedBy = "book")
+	private Collection<BookAuthor> bookAuthor;
 	private LocalDateTime createdAt;
 	private LocalDateTime updatedAt;
 
 	public Book() {
+	}
+	
+	public Book(int id) {
+		this.id = id;
 	}
 
 	public int getId() {
