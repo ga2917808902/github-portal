@@ -56,10 +56,11 @@ public class BookController {
 	@Autowired
 	BookAuthorService bookAuthorService;
 	
+	static ObjectMapper mapper = new ObjectMapper();
+	
 	@GetMapping(value = {"index", "/"})
 	public String index(ModelMap model) throws JsonProcessingException {
 		List<Book> listBooks = service.findAll();
-		ObjectMapper mapper = new ObjectMapper();
 		model.addAttribute("listBooks", mapper.writeValueAsString(listBooks));
 		
 		return "book/index";
@@ -102,11 +103,26 @@ public class BookController {
 	public String edit(ModelMap model, @PathVariable("id") int id) throws JsonProcessingException {
 		Optional<Book> book = service.findById(id);
 		List<Author> listAuthors = bookAuthorService.findByBook(id);
-		ObjectMapper mapper = new ObjectMapper();
+		//show authors trên popup
+		List<Author> authors = authorService.findAll();
 		model.addAttribute("listAuthors", mapper.writeValueAsString(listAuthors));
+		model.addAttribute("authors", mapper.writeValueAsString(authors));
+		model.addAttribute("id", id);
 		model.addAttribute("book", book);
 		
 		return "book/form";
+	}
+	
+	@GetMapping("transfer-data/{id}")
+	public String transferData(@PathVariable("id") int id, @RequestParam List<Integer> listIdAuthor) {
+		for(int authorId : listIdAuthor) {
+			Book tempBook = new Book(id);
+			Author tempAuthor = new Author(authorId);
+			BookAuthor bookAuthor = new BookAuthor(tempBook, tempAuthor);
+			bookAuthorService.saveOrUpdate(bookAuthor);
+		}
+		
+		return "redirect:/book/edit/" + id;
 	}
 	
 	@GetMapping("delete/{id}")

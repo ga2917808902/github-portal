@@ -30,4 +30,10 @@ public class AuthorService {
 	public void delete(int id) {
 		repo.deleteById(id);
 	}
+	
+	public List<Author> listAuthors(List<Author> tempList){
+		List<Author> list = this.findAll();
+		
+		return list;
+	}
 }
