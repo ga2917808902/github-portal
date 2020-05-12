@@ -2,6 +2,7 @@ package com.portal.controllers;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
 
@@ -29,8 +30,7 @@ public class ImageBookController {
 
 	@GetMapping("view/{id}")
 	public String view(ModelMap model, @PathVariable("id") int id, HttpSession session) {
-		Book book = new Book();
-		book.setId(id);
+		Book book = new Book(id);
 		List<ImageBook> listImageBooks = service.findByBook(book);
 		model.addAttribute("listImageBooks", listImageBooks);
 		session.setAttribute("id", id);
@@ -39,7 +39,11 @@ public class ImageBookController {
 	}
 
 	@GetMapping("new")
-	public String create(ModelMap model) {
+	public String create(ModelMap model, HttpSession session) {
+		int idBook = (int) session.getAttribute("id");
+		Book book = new Book(idBook);
+		List<ImageBook> listImageBooks = service.findByBook(book);
+		model.addAttribute("listImageBooks", listImageBooks);
 		model.addAttribute("imageBook", new ImageBook());
 
 		return "image-book/form";
@@ -56,15 +60,42 @@ public class ImageBookController {
 
 	@PostMapping("save")
 	public String saveOrUpdate(@ModelAttribute("imageBook") ImageBook imageBook,
-			@RequestParam("imageFile") MultipartFile imageFile, HttpSession session) throws IOException {
-		String image = imageFile.getOriginalFilename();
+			@RequestParam("imageFile") MultipartFile imageFile, @RequestParam("tempImageFile") String tempImage, HttpSession session) throws IOException {
+		if (imageFile.getOriginalFilename().length() == 0) {
+			imageBook.setName(tempImage);
+		}else {
+			String image = imageFile.getOriginalFilename();
+			imageBook.setName(image);
+			service.saveImage(imageFile);
+		}
 		int id = (int) session.getAttribute("id");
-		imageBook.setName(image);
-		service.saveImage(imageFile);
 		Book book = new Book(id);
 		imageBook.setBook(book);
 		service.saveOrUpdate(imageBook);
 		
 		return "redirect:/image-book/view/" + id;
+	}
+	
+	@GetMapping("edit/{id}")
+	public String edit(ModelMap model, @PathVariable("id") int id, HttpSession session) {
+		Optional<ImageBook> imageBook = service.findById(id);
+		model.addAttribute("imageBook", imageBook);
+		model.addAttribute("image", imageBook.get().getName());
+		
+		//Lấy những ảnh có trong 1 cuốn sách để so sánh xem có ảnh chính chưa
+		int idBook = (int) session.getAttribute("id");
+		Book book = new Book(idBook);
+		List<ImageBook> listImageBooks = service.findByBook(book);
+		model.addAttribute("listImageBooks", listImageBooks);
+		
+		return "image-book/form";
+	}
+	
+	@GetMapping("delete/{id}")
+	public String delete(@PathVariable("id") int id, HttpSession session) {
+		int idBook = (int) session.getAttribute("id");
+		service.delete(id);
+		
+		return "redirect:/image-book/view/" + idBook;
 	}
 }

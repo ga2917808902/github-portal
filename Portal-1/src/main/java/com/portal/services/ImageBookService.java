@@ -5,6 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,10 @@ public class ImageBookService {
 	public List<ImageBook> findByBook(Book book) {
 		List<ImageBook> list = repo.findByBook(book);
 		return list;
+	}
+	
+	public Optional<ImageBook> findById(int id) {
+		return repo.findById(id);
 	}
 	
 	public void saveOrUpdate(ImageBook imageBook) {

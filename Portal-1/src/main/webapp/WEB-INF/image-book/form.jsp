@@ -29,18 +29,36 @@ img {
 			<jsp:include page="../menu.jsp" />
 		</nav>
 		<br />
-		<form:form action="image-book/save" method="post" modelAttribute="imageBook" enctype="multipart/form-data">
+		<form:form action="image-book/save" method="post"
+			modelAttribute="imageBook" enctype="multipart/form-data">
 			<form:hidden path="id" readonly="true" />
 			<div>
-				<label>Hình ảnh</label>
-				<input type="file" name="imageFile" />
-			</div><br/>
+				<label>Hình ảnh</label> <input type="file" name="imageFile" /> <input
+					type="hidden" name="tempImageFile"
+					value="<%=request.getAttribute("image")%>" />
+			</div>
+			<br />
 			<div>
 				<label>Ảnh chính</label>
-				<form:select path="main">
-					<form:option value="1">Ảnh chính</form:option>
-					<form:option value="0">Ảnh bình thường</form:option>
-				</form:select>
+				<c:forEach var="item" items="${listImageBooks }">
+					<c:choose>
+						<c:when test="${item.main == 1}">
+							<form:select path="main">
+								<form:option value="0">Ảnh phụ</form:option>
+							</form:select>
+						</c:when>
+						<c:when test="${item.main == 0}">
+							<form:select path="main">
+								<form:option value="1">Ảnh chính</form:option>
+								<form:option value="0">Ảnh phụ</form:option>
+							</form:select>
+						</c:when>
+						<c:otherwise>
+
+						</c:otherwise>
+					</c:choose>
+				</c:forEach>
+
 			</div>
 			<div>
 				<button>Save</button>

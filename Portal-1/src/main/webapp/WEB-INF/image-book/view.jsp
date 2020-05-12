@@ -12,8 +12,8 @@
 	href="../resources/css/layout.css" />
 <style type="text/css">
 img {
-	height: 90px;
-	width: 100px;
+	height: 45px;
+	width: 60px;
 }
 </style>
 <title>Insert title here</title>
@@ -39,6 +39,8 @@ img {
 					<td><img src="../resources/image/product/${item.name }" /></td>
 					<td>${item.book.name }</td>
 					<td>${item.main == 1 ? 'Ảnh chính' : 'Ảnh phụ'}</td>
+					<td><a href="/image-book/edit/${item.id }">Sửa</a></td>
+					<td><a href="/image-book/delete/${item.id }">Xóa</a></td>
 				</tr>
 			</c:forEach>
 
