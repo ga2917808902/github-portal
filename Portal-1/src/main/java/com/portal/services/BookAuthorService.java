@@ -34,4 +34,8 @@ public class BookAuthorService {
 	public void delete(long id) {
 		repo.deleteById(id);
 	}
+	
+	public void deleteByAuthor(int id) {
+		repo.deleteByAuthor(id);
+	}
 }

@@ -130,6 +130,19 @@
 			$("#MyModal").modal();
 		}
 		
+		function removeAuthor(id){
+			$.ajax({
+				type: "POST",
+				url: "/book/remove-author",
+				data: {
+					'listIdAuthor' : id
+				},
+				success: function(data){
+					window.location.href = "http://localhost:8080/book/edit/" + '${id}';
+				}
+			})
+		}
+		
 		//Datatable author ngoài popup
 		$(document).ready(function(){
 			var listData = eval('${listAuthors}');
@@ -140,7 +153,7 @@
 					{
 						data: "id", 
 						mRender: function(data){
-							return '<input type="checkbox" name="listIdAuthor" value="' + data + '" />';
+							return '<input type="checkbox" name="listIdAuthor" value="' + data + '" onClick="removeAuthor(' + data + ');"/>';
 						}	
 					},
 				]
