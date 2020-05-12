@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,23 +28,24 @@ img {
 		<nav>
 			<jsp:include page="../menu.jsp" />
 		</nav>
-		<br/>
-		<a href="/image-book/new">Thêm ảnh</a>
-		<table border="1">
-			<tr>
-				<th>Hình ảnh</th>
-				<th>Sách</th>
-				<th>Phân loại</th>
-			</tr>
-			<c:forEach var="item" items="${listImageBooks }">
-				<tr>
-					<td><img src="../resources/image/product/${item.name }" /></td>
-					<td>${item.book.name }</td>
-					<td>${item.main == 1 ? 'Ảnh chính' : 'Ảnh phụ'}</td>
-				</tr>
-			</c:forEach>
-
-		</table>
+		<br />
+		<form:form action="image-book/save" method="post" modelAttribute="imageBook" enctype="multipart/form-data">
+			<form:hidden path="id" readonly="true" />
+			<div>
+				<label>Hình ảnh</label>
+				<input type="file" name="imageFile" />
+			</div><br/>
+			<div>
+				<label>Ảnh chính</label>
+				<form:select path="main">
+					<form:option value="1">Ảnh chính</form:option>
+					<form:option value="0">Ảnh bình thường</form:option>
+				</form:select>
+			</div>
+			<div>
+				<button>Save</button>
+			</div>
+		</form:form>
 		<footer>Footer</footer>
 	</div>
 

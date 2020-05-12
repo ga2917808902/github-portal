@@ -3,17 +3,15 @@ package com.portal.models;
 import java.time.LocalDateTime;
 import java.util.Collection;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
-import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 public class Book {
@@ -24,16 +22,16 @@ public class Book {
 	private String name;
 	private String price;
 	private String note;
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "publishing_id")
 	private Publishing publishing;
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "branch_id")
 	private Branch branch;
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "book_cover_id")
 	private BookCover bookCover;
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "lang_id")
 	private Language language;
 	@OneToMany(mappedBy = "book")

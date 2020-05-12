@@ -1,7 +1,8 @@
 package com.portal.models;
 
-import javax.persistence.Column;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,8 +18,7 @@ public class ImageBook {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String name;
-	@Column(name = "is_top")
-	private boolean isTop;
+	private int main;
 	@ManyToOne
 	@JoinColumn(name = "book_id")
 	private Book book;
@@ -48,12 +48,12 @@ public class ImageBook {
 	public void setBook(Book book) {
 		this.book = book;
 	}
-	public boolean isTop() {
-		return isTop;
+	
+	public int getMain() {
+		return main;
 	}
 
-	public void setTop(boolean isTop) {
-		this.isTop = isTop;
+	public void setMain(int main) {
+		this.main = main;
 	}
-	
 }
