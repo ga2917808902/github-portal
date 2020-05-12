@@ -33,8 +33,40 @@ public class AuthorService {
 	
 	public List<Author> listAuthors(List<Author> tempList){
 		List<Author> list = this.findAll();
-		
+		list.sort((Author s1, Author s2)->s1.getName().compareTo(s2.getName())); 
+		for (int i = 0; i < tempList.size(); i++) {
+			int index = binarySearch(list, tempList.get(i).getName());
+			if (index != -1) {
+				list.remove(index);
+			}
+		}
 		
 		return list;
 	}
+	
+	/**
+	 * Binarysearch with list string
+	 * @param list, danh sách chứa tất cả tác giả
+	 * @param x, tên của 1 tác giả đã có trong cuốn sách
+	 * @return 0 nếu có
+	 */
+	int binarySearch(List<Author> list, String x) {
+        int low = 0;
+        int high = list.size() - 1;
+        int mid;
+
+        while (low <= high) {
+            mid = (low + high) / 2;
+
+            if (list.get(mid).getName().compareTo(x) < 0) {
+                low = mid + 1;
+            } else if (list.get(mid).getName().compareTo(x) > 0) {
+                high = mid - 1;
+            } else {
+                return mid;
+            }
+        }
+
+        return -1;
+    }
 }

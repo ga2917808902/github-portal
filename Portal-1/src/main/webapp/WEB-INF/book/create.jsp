@@ -78,15 +78,6 @@
 
 			<div>
 				<label>Tác giả</label><br/>
-				<c:choose>
-					<c:when
-						test="${requestScope['javax.servlet.forward.request_uri'].equals('/book/new')}"></c:when>
-					<c:otherwise>
-						<a class="btn btn-info" onclick="openPopup();">Chọn thêm tác giả</a>
-					</c:otherwise>
-				</c:choose>
-
-
 				<div style="width: 380px">
 					<table id="myTable" border="1">
 						<thead>
@@ -102,32 +93,6 @@
 				<button>Save</button>
 			</div>
 		</form:form>
-		<!-- Popup -->
-		<div class="modal fade" id="MyModal">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">
-						<a href="#" class="close" data-dismiss="modal">&times;</a>
-						<h4 id="ModalTitle"></h4>
-					</div>
-					<div class="modal-body">
-						<div style="width: 400px">
-							<form method="get" action="/book/transfer-data/${id }">
-								<table id="myTable-popup" border="1">
-									<thead>
-										<tr>
-											<th>Tên tác giả</th>
-											<th>Chọn</th>
-										</tr>
-									</thead>	
-								</table>
-								<button>Save</button>
-							</form>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
 		<footer>FOOTER</footer>
 	</div>
 	<script>
@@ -142,23 +107,6 @@
 			var listData = eval('${listAuthors}');
 			$('#myTable').DataTable({
 				aaData : listData,
-				aoColumns : [
-					{data: "name"},
-					{
-						data: "id", 
-						mRender: function(data){
-							return '<input type="checkbox" name="listIdAuthor" value="' + data + '" />';
-						}	
-					},
-				]
-			});
-		});
-		
-		//Datatable Author trong popup
-		$(document).ready(function(){
-			var data = eval('${authors}');
-			$('#myTable-popup').DataTable({
-				aaData : data,
 				aoColumns : [
 					{data: "name"},
 					{
