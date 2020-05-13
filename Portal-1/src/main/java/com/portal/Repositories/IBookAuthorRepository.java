@@ -1,5 +1,6 @@
 package com.portal.Repositories;
 
+
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -13,4 +14,5 @@ public interface IBookAuthorRepository extends CrudRepository<BookAuthor, Long> 
 	@Transactional
 	@Query(nativeQuery = true, value ="DELETE FROM book_author WHERE author_id=?1")
 	void deleteByAuthor(int id);
+
 }

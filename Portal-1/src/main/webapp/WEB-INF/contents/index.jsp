@@ -18,16 +18,34 @@
 			<h1>Portal</h1>
 		</header>
 		<nav>
-			<jsp:include page="menu.jsp" />
+			<jsp:include page="../menu.jsp" />
 		</nav>
 		<aside>
 			<br />
-			<c:forEach var="item" items="${listCategories }">
-				<a href="/contents/${item[0] }"><b>${item[1]}</b></a>(${item[2] })
-				<br />
-				<br />
+			<c:forEach var="item" items="${listBranchs}">
+				<a href="#">${item[1] }</a>(${item[2] })<br/><br/>
 			</c:forEach>
 		</aside>
+		<article>
+			<table border="1">
+				<thead>
+					<tr>
+						<th>Tên</th>
+						<th>Hình</th>
+						<th>Giá</th>
+					</tr>
+				</thead>
+				<tbody>
+					<c:forEach var="book" items="${listBooks }">
+						<tr>
+							<td>${book.name }</td>
+							<td>${book.imageBook.name}</td>
+							<td>${book.price }</td>
+						</tr>
+					</c:forEach>
+				</tbody>
+			</table>
+		</article>
 		<footer>FOOTER</footer>
 	</div>
 </body>

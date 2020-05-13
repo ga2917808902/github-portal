@@ -43,7 +43,7 @@ public class Book {
 
 	public Book() {
 	}
-	
+
 	public Book(int id) {
 		this.id = id;
 	}
@@ -126,5 +126,21 @@ public class Book {
 
 	public void setUpdatedAt(LocalDateTime updatedAt) {
 		this.updatedAt = updatedAt;
+	}
+
+	public Collection<ImageBook> getImageBook() {
+		return imageBook;
+	}
+
+	public void setImageBook(Collection<ImageBook> imageBook) {
+		this.imageBook = imageBook;
+	}
+
+	public Collection<BookAuthor> getBookAuthor() {
+		return bookAuthor;
+	}
+
+	public void setBookAuthor(Collection<BookAuthor> bookAuthor) {
+		this.bookAuthor = bookAuthor;
 	}
 }

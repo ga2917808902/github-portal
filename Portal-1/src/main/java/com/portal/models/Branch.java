@@ -30,6 +30,8 @@ public class Branch {
 	
 	public Branch() {}
 	
+	public Branch(int id) {this.id = id;}
+	
 	public int getId() {
 		return id;
 	}
