@@ -1,6 +1,7 @@
 package com.portal.models;
 
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.persistence.Entity;
@@ -32,6 +33,12 @@ public class Branch {
 	
 	public Branch(int id) {this.id = id;}
 	
+	
+	public Branch(int id, String name) {
+		this.id = id;
+		this.name = name;
+	}
+
 	public int getId() {
 		return id;
 	}
@@ -47,7 +54,7 @@ public class Branch {
 	public void setName(String name) {
 		this.name = name;
 	}
-
+	
 	public Category getCategory() {
 		return category;
 	}

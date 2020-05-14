@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.portal.Repositories.IBookRepository;
 import com.portal.models.Book;
+import com.portal.models.Branch;
 
 @Service
 public class BookService {
@@ -29,6 +30,10 @@ public class BookService {
 	
 	public void delete(int id) {
 		repo.deleteById(id);
+	}
+	
+	public List<Book> findByBranch(Branch branch){
+		return repo.findByBranch(branch);
 	}
 	
 }

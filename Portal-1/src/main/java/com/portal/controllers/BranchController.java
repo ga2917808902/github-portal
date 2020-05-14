@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.portal.models.Branch;
 import com.portal.models.Category;
 import com.portal.services.BranchService;
@@ -34,6 +35,7 @@ public class BranchController {
 	public String index(ModelMap model) throws JsonProcessingException {
 		List<Branch> listBranchs = service.findAll();
 		ObjectMapper mapper = new ObjectMapper();
+		mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
 		model.addAttribute("listBranchs", mapper.writeValueAsString(listBranchs));
 		model.addAttribute("branch", new Branch());
 		

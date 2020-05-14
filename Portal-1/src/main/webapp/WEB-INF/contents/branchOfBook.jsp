@@ -23,7 +23,7 @@
 		<aside>
 			<br />
 			<c:forEach var="item" items="${listBranchs}">
-				<a href="/contents/${item[0] }/${item[1] }">${item[1] }</a>(${item[2] })<br />
+				<a href="/contents/${id }/${item[1] }">${item[1] }</a>(${item[2] })<br />
 				<br />
 			</c:forEach>
 		</aside>

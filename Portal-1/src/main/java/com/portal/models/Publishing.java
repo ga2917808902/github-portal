@@ -1,5 +1,6 @@
 package com.portal.models;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.persistence.Entity;
@@ -35,4 +36,5 @@ public class Publishing {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
 }
