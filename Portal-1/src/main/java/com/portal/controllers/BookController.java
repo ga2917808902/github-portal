@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.portal.models.Author;
 import com.portal.models.Book;
 import com.portal.models.BookAuthor;
@@ -63,6 +64,7 @@ public class BookController {
 	@GetMapping(value = { "index", "/" })
 	public String index(ModelMap model) throws JsonProcessingException {
 		List<Book> listBooks = service.findAll();
+		mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
 		model.addAttribute("listBooks", mapper.writeValueAsString(listBooks));
 
 		return "book/index";
@@ -72,6 +74,7 @@ public class BookController {
 	public String create(ModelMap model) throws JsonProcessingException {
 		List<Author> listAuthors = authorService.findAll();
 		ObjectMapper mapper = new ObjectMapper();
+		mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
 		model.addAttribute("listAuthors", mapper.writeValueAsString(listAuthors));
 		model.addAttribute("book", new Book());
 

@@ -1,9 +1,9 @@
 package com.portal.models;
 
 import java.time.LocalDateTime;
-import java.util.Collection;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Book {
@@ -35,9 +37,11 @@ public class Book {
 	@JoinColumn(name = "lang_id")
 	private Language language;
 	@OneToMany(mappedBy = "book")
-	private Collection<ImageBook> imageBook;
+	@JsonManagedReference
+	private List<ImageBook> imageBook = new ArrayList<>();
 	@OneToMany(mappedBy = "book")
-	private Collection<BookAuthor> bookAuthor;
+	@JsonManagedReference
+	private List<BookAuthor> bookAuthor = new ArrayList<>();
 	private LocalDateTime createdAt;
 	private LocalDateTime updatedAt;
 
@@ -128,19 +132,19 @@ public class Book {
 		this.updatedAt = updatedAt;
 	}
 
-	public Collection<ImageBook> getImageBook() {
+	public List<ImageBook> getImageBook() {
 		return imageBook;
 	}
 
-	public void setImageBook(Collection<ImageBook> imageBook) {
+	public void setImageBook(List<ImageBook> imageBook) {
 		this.imageBook = imageBook;
 	}
 
-	public Collection<BookAuthor> getBookAuthor() {
+	public List<BookAuthor> getBookAuthor() {
 		return bookAuthor;
 	}
 
-	public void setBookAuthor(Collection<BookAuthor> bookAuthor) {
+	public void setBookAuthor(List<BookAuthor> bookAuthor) {
 		this.bookAuthor = bookAuthor;
 	}
 }

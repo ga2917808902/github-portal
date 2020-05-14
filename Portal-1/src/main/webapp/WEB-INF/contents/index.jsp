@@ -23,7 +23,8 @@
 		<aside>
 			<br />
 			<c:forEach var="item" items="${listBranchs}">
-				<a href="#">${item[1] }</a>(${item[2] })<br/><br/>
+				<a href="/contents/${id }/${item[1] }">${item[1] }</a>(${item[2] })<br />
+				<br />
 			</c:forEach>
 		</aside>
 		<article>
@@ -31,16 +32,31 @@
 				<thead>
 					<tr>
 						<th>Tên</th>
-						<th>Hình</th>
 						<th>Giá</th>
+						<th colspan="2">Tác giả</th>
+						<th>Hình ảnh</th>
 					</tr>
 				</thead>
 				<tbody>
 					<c:forEach var="book" items="${listBooks }">
 						<tr>
 							<td>${book.name }</td>
-							<td>${book.imageBook.name}</td>
 							<td>${book.price }</td>
+							<c:choose>
+								<c:when test="${book.bookAuthor.size() <= 2}">
+									<c:forEach var="author" items="${book.bookAuthor }">
+										<td>${author.author.name }</td>
+									</c:forEach>
+								</c:when>
+								<c:otherwise>
+									<td>Nhiều tác giả</td>
+								</c:otherwise>
+							</c:choose>
+							<c:forEach var="image" items="${book.imageBook }">
+								<c:if test="${image.main == 1 }">
+									<td>${image.name }</td>
+								</c:if>
+							</c:forEach>
 						</tr>
 					</c:forEach>
 				</tbody>

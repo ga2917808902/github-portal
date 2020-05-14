@@ -27,8 +27,7 @@ public class ContentsController {
 		List<Book> listBooks = branchService.findByBook(id);
 		model.addAttribute("listBranchs", listBranchs);
 		model.addAttribute("listBooks", listBooks);
-		System.out.println(listBooks.get(0));
-		
+		model.addAttribute("id", id);
 		return "contents/index";
 	}
 	

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.portal.models.Author;
 import com.portal.services.AuthorService;
 
@@ -29,6 +30,7 @@ public class AuthorController {
 	public String index(ModelMap model) throws JsonProcessingException {
 		List<Author> listAuthors = service.findAll();
 		ObjectMapper mapper = new ObjectMapper();
+		mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
 		model.addAttribute("listAuthors", mapper.writeValueAsString(listAuthors));
 		model.addAttribute("author", new Author());
 		

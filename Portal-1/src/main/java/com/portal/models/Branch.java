@@ -21,7 +21,7 @@ public class Branch {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String name;
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "category_id")
 	@JsonIgnoreProperties(value = {"branch"}, allowSetters=true)
 	private Category category;

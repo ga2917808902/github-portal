@@ -1,9 +1,9 @@
 package com.portal.models;
 
-import java.util.Collection;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,7 +18,7 @@ public class Author {
 	private String name;
 	private String note;
 	@OneToMany(mappedBy = "author")
-	private Collection<BookAuthor> bookAuthor;
+	private List<BookAuthor> bookAuthor = new ArrayList<>();
 	
 	public Author() {}
 	
@@ -47,4 +47,5 @@ public class Author {
 	public void setNote(String note) {
 		this.note = note;
 	}
+	
 }

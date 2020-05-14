@@ -49,4 +49,5 @@ public class Category {
 	public void setBranch(Collection<Branch> branch) {
 		this.branch = branch;
 	}
+
 }

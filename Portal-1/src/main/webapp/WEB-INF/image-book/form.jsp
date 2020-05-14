@@ -40,24 +40,28 @@ img {
 			<br />
 			<div>
 				<label>Ảnh chính</label>
-				<c:forEach var="item" items="${listImageBooks }">
-					<c:choose>
-						<c:when test="${item.main == 1}">
-							<form:select path="main">
-								<form:option value="0">Ảnh phụ</form:option>
-							</form:select>
-						</c:when>
-						<c:when test="${item.main == 0}">
-							<form:select path="main">
-								<form:option value="1">Ảnh chính</form:option>
-								<form:option value="0">Ảnh phụ</form:option>
-							</form:select>
-						</c:when>
-						<c:otherwise>
+				<c:choose>
+					<c:when test="${result == 0 }">
+						<form:select path="main">
+							<form:option value="1">Ảnh chính</form:option>
+							<form:option value="0">Ảnh phụ</form:option>
+						</form:select>
+					</c:when>
 
-						</c:otherwise>
-					</c:choose>
-				</c:forEach>
+					<c:when test="${result == 1 }">
+						<form:select path="main">
+							<form:option value="0">Ảnh phụ</form:option>
+						</form:select>
+					</c:when>
+
+					<c:when test="${result == 2 }">
+						<form:select path="main">
+							<form:option value="1">Ảnh chính</form:option>
+							<form:option value="0">Ảnh phụ</form:option>
+						</form:select>
+					</c:when>
+
+				</c:choose>
 
 			</div>
 			<div>
