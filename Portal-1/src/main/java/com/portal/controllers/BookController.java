@@ -3,8 +3,12 @@ package com.portal.controllers;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -62,10 +66,14 @@ public class BookController {
 	static ObjectMapper mapper = new ObjectMapper();
 
 	@GetMapping(value = { "index", "/" })
-	public String index(ModelMap model) throws JsonProcessingException {
-		List<Book> listBooks = service.findAll();
-		mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-		model.addAttribute("listBooks", mapper.writeValueAsString(listBooks));
+	public String index(ModelMap model, @RequestParam(defaultValue = "1") int page) {
+		Page<Book> listBooks = service.findAll(PageRequest.of(page - 1, 10));
+		int totalPages = listBooks.getTotalPages();
+		if (totalPages > 0) {
+			List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
+			model.addAttribute("pageNumbers", pageNumbers);
+		}
+		model.addAttribute("listBooks", listBooks);
 
 		return "book/index";
 	}
@@ -88,8 +96,8 @@ public class BookController {
 		book.setUpdatedAt(time);
 		// save book
 		service.saveOrUpdate(book);
-		
-		//save book_author
+
+		// save book_author
 		for (int authorId : listIdAuthor) {
 			Book tempBook = new Book(book.getId());
 			Author tempAuthor = new Author(authorId);
@@ -111,9 +119,9 @@ public class BookController {
 	@GetMapping("edit/{id}")
 	public String edit(ModelMap model, @PathVariable("id") int id) throws JsonProcessingException {
 		Optional<Book> book = service.findById(id);
-		//Danh sách tác đã được thêm vào book_author
+		// Danh sách tác đã được thêm vào book_author
 		List<Author> listAuthors = bookAuthorService.findByBook(id);
-		//Danh sách tác giả chưa được thêm vào book_author
+		// Danh sách tác giả chưa được thêm vào book_author
 		List<Author> authors = authorService.listAuthors(listAuthors);
 		model.addAttribute("listAuthors", mapper.writeValueAsString(listAuthors));
 		model.addAttribute("authors", mapper.writeValueAsString(authors));
@@ -141,11 +149,11 @@ public class BookController {
 
 		return "redirect:/book/";
 	}
-	
+
 	@PostMapping("remove-author")
 	public ResponseEntity<Void> removeAuthor(@RequestParam("listIdAuthor") int idAuthor) {
 		bookAuthorService.deleteByAuthor(idAuthor);
-		
+
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 

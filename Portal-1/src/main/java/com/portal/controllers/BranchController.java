@@ -35,6 +35,7 @@ public class BranchController {
 	public String index(ModelMap model) throws JsonProcessingException {
 		List<Branch> listBranchs = service.findAll();
 		ObjectMapper mapper = new ObjectMapper();
+		//Config FAIL_ON_EMPTY_BEANS khi dùng để tranh lỗi empty bean
 		mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
 		model.addAttribute("listBranchs", mapper.writeValueAsString(listBranchs));
 		model.addAttribute("branch", new Branch());

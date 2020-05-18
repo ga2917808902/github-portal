@@ -15,10 +15,6 @@
 	type="text/css" />
 <link rel="stylesheet" type="text/css"
 	href="../resources/css/layout.css" />
-<link rel="stylesheet" type="text/css"
-	href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
-<script type="text/javascript" charset="utf8"
-	src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
 <style>
 /* Modal Content */
 .modal-content {
@@ -41,27 +37,33 @@
 			<jsp:include page="../menu.jsp" />
 		</nav>
 		<br />
-		<div class="container" style="margin-top: 2%">
-			<a class="btn btn-info" href="/book/new">Thêm mới</a>
+		<div class="container" style="margin-top: 3%">
+			<a href="/book/new" class="btn btn-info">Thêm mới</a>
 			<br /> <br />
-			<div style="width: 1200px">
-				<table id="myTable" border="1">
-					<thead>
-						<tr>
-							<th>Tên sách</th>
-							<th>Giá</th>
-							<th>Nhà xuất bản</th>
-							<th>Ngành</th>
-							<th>Bìa</th>
-							<th>Ngôn ngữ</th>
-							<th>Ngày tạo</th>
-							<th>Ngày cập nhật</th>
-							<th></th>
-						</tr>
-					</thead>
-				</table>
-			</div>
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Name</th>
+					</tr>
+				</thead>
+				<c:forEach var="book" items="${listBooks.content }">
+					<tr>
+						<td>${book.id }</td>
+						<td>${book.name }</td>
+						<td><a class="btn btn-info" href="/image-book/view/${book.id }">Xem ảnh</a></td>
+						<td><a class="btn btn-warning" href="/book/edit/${book.id }">Sửa</a></td>
+						<td><a class="btn btn-danger" onClick="deleteBook(${book.id});">Xóa</a></td>
+					</tr>
+
+				</c:forEach>
+			</table>
 		</div>
+		<ul>
+			<li><c:forEach var="i" items="${pageNumbers}">
+					<a style="color: red;" href="/book/?page=${i }">${i }</a>
+				</c:forEach></li>
+		</ul>
 
 		<footer>FOOTER</footer>
 	</div>
@@ -77,34 +79,6 @@
 				}
 			})
 		}
-		
-		//Datatable
-		$(document).ready(function(){
-			var data = eval('${listBooks}');
-			$('#myTable').DataTable({
-				aaData : data,
-				aoColumns : [
-					{data: "name"},
-					{data: "price"},
-					{data: "publishing.name"},
-					{data: "branch.name"},
-					{data: "bookCover.name"},
-					{data: "language.name"},
-					{data: "createdAt"},
-					{data: "updatedAt"},
-					{
-						data: "id", 
-						mRender: function(data){
-							var str = '';
-							str += '<a href="/image-book/view/' + data + '" class="btn btn-info">Xem ảnh</a>' + ' ';
-							str += '<a href="/book/edit/' + data + '" class="btn btn-warning">Sửa</a>' + ' ';
-							str += '<a onClick="deleteBook(' + data + ')" class="btn btn-danger">Xóa</a>';
-							return str;
-						}	
-					},
-				]
-			});
-		});
 	</script>
 </body>
 </html>

@@ -1,12 +1,12 @@
 package com.portal.Repositories;
 
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
 
 import com.portal.models.Category;
 
-public interface ICategoryRepository extends CrudRepository<Category, Integer> {
+public interface ICategoryRepository extends JpaRepository<Category, Integer> {
 
 	@Query(nativeQuery = true, 
 			value = "SELECT COUNT(*) "

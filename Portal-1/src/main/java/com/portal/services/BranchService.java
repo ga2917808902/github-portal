@@ -7,9 +7,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.portal.Repositories.IBookRepository;
 import com.portal.Repositories.IBranchRepository;
-import com.portal.models.Book;
 import com.portal.models.Branch;
 import com.portal.models.Category;
 
@@ -19,8 +17,6 @@ public class BranchService {
 	@Autowired
 	IBranchRepository repo;
 	
-	@Autowired
-	IBookRepository bookRepo;
 	
 	public List<Branch> findAll(){
 		return (List<Branch>) repo.findAll();
@@ -46,6 +42,11 @@ public class BranchService {
 		return repo.countBook(id);
 	}
 	
+	/**
+	 * Hàm dùng để count book trong mỗi ngành(branch) book, nếu count > 0 thì add vào list
+	 * @param category id của loại
+	 * @return danh sách thư mục(branch)
+	 */
 	public List<Object[]> contents(Category category) {
 		List<Object[]> listContents = new ArrayList<>();
 		List<Branch> list = this.findByCategory(category);
@@ -60,7 +61,4 @@ public class BranchService {
 		return listContents;
 	}
 	
-	public List<Book> findByBook(int id){
-		return bookRepo.findBook(id);
-	}
 }

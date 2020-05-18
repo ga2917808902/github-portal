@@ -1,21 +1,27 @@
 package com.portal.Repositories;
 
-import java.util.List;
-
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
 
 import com.portal.models.Book;
 import com.portal.models.Branch;
 
-public interface IBookRepository extends CrudRepository<Book, Integer>{
+public interface IBookRepository extends JpaRepository<Book, Integer>{
 
+	/**
+	 * Dùng pageable với nativeQuery thì phải thêm câu lệnh countQuery
+	 * @param id
+	 * @param pageable phân trang
+	 * @return
+	 */
 	@Query(nativeQuery = true, 
-			value = "SELECT book.* "
+			value = "SELECT book.*  "
 					+ "FROM branch join book on branch.id=book.branch_id "
-					+ "WHERE branch.category_id=?1 ")
-	List<Book> findBook(int id);
+					+ "WHERE branch.category_id=?1 ",
+					countQuery = "SELECT book.* FROM branch join book on branch.id=book.branch_id WHERE branch.category_id=?1")
+	Page<Book> findBook(int id, Pageable pageable);
 	
-	List<Book> findByBranch(Branch branch);
+	Page<Book> findByBranch(Branch branch, Pageable pageable);
 }

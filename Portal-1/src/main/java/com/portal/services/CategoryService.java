@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.portal.Repositories.ICategoryRepository;
@@ -16,6 +18,10 @@ public class CategoryService {
 	@Autowired
 	ICategoryRepository repo;
 
+	public Page<Category> findAll(Pageable pageable) {
+		return repo.findAll(pageable);
+	}
+	
 	public List<Category> findAll() {
 		return (List<Category>) repo.findAll();
 	}
@@ -35,7 +41,11 @@ public class CategoryService {
 	public int countBook(int id) {
 		return repo.countBook(id);
 	}
-
+	
+	/**
+	 * Hàm dùng để count book có trong category
+	 * @return danh sách category
+	 */
 	public List<Object[]> contents() {
 		List<Object[]> listContents = new ArrayList<>();
 		List<Category> list = this.findAll();

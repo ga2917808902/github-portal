@@ -15,10 +15,6 @@
 	type="text/css" />
 <link rel="stylesheet" type="text/css"
 	href="../resources/css/layout.css" />
-<link rel="stylesheet" type="text/css"
-	href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
-<script type="text/javascript" charset="utf8"
-	src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
 <style>
 /* Modal Content */
 .modal-content {
@@ -72,21 +68,34 @@
 				</div>
 			</div>
 		</div>
-		<div class="container" style="margin-top: 2%">
+		<div class="container" style="margin-top: 3%">
 			<button class="btn btn-info" onclick="newAuthor();">Thêm mới</button>
 			<br /> <br />
-			<div style="width: 1200px">
-				<table id="myTable" border="1">
-					<thead>
-						<tr>
-							<th>Name</th>
-							<th>Note</th>
-							<th></th>
-						</tr>
-					</thead>
-				</table>
-			</div>
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Name</th>
+					</tr>
+				</thead>
+				<c:forEach var="author" items="${listAuthors.content }">
+					<tr>
+						<td>${author.id }</td>
+						<td>${author.name }</td>
+						<td><button class="btn btn-warning"
+								onclick="editAuthor(${author.id});">Sửa</button></td>
+						<td><button class="btn btn-danger"
+								onclick="deleteAuthor(${author.id});">Xóa</button></td>
+					</tr>
+
+				</c:forEach>
+			</table>
 		</div>
+		<ul>
+			<li><c:forEach var="i" items="${pageNumbers}">
+					<a style="color: red;" href="/author/?page=${i }">${i }</a>
+				</c:forEach></li>
+		</ul>
 
 		<footer>FOOTER</footer>
 	</div>
@@ -121,27 +130,6 @@
 				}
 			})
 		}
-		
-		//Datatable
-		$(document).ready(function(){
-			var data = eval('${listAuthors}');
-			$('#myTable').DataTable({
-				aaData : data,
-				aoColumns : [
-					{data: "name"},
-					{data: "note"},
-					{
-						data: "id", 
-						mRender: function(data){
-							var str = '';
-							str += '<button onClick="editAuthor(' + data + ')" class="btn btn-warning">Sửa</button>' + ' ';
-							str += '<button onClick="deleteAuthor(' + data + ')" class="btn btn-danger">Xóa</button>';
-							return str;
-						}	
-					},
-				]
-			});
-		});
 	</script>
 </body>
 </html>

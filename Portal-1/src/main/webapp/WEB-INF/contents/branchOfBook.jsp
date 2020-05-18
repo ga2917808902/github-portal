@@ -8,6 +8,8 @@
 <script src="https://kit.fontawesome.com/bc6916a687.js"></script>
 <script type="text/javascript" src="resources/js/jquery-3.4.1.min.js"></script>
 <base href="${pageContext.servletContext.contextPath}/">
+<link href="../resources/bootstrap/bootstrap.min.css" rel="stylesheet"
+	type="text/css" />
 <link rel="stylesheet" type="text/css"
 	href="../resources/css/layout.css" />
 <title>Insert title here</title>
@@ -23,22 +25,20 @@
 		<aside>
 			<br />
 			<c:forEach var="item" items="${listBranchs}">
-				<a href="/contents/${id }/${item[1] }">${item[1] }</a>(${item[2] })<br />
+				<a href="/contents/${item[0] }/${item[1] }">${item[1] }</a>(${item[2] })<br />
 				<br />
 			</c:forEach>
 		</aside>
 		<article>
-			<table border="1">
-				<thead>
-					<tr>
-						<th>Tên</th>
-						<th>Giá</th>
-						<th colspan="2">Tác giả</th>
-						<th>Hình ảnh</th>
-					</tr>
-				</thead>
-				<tbody>
-					<c:forEach var="book" items="${listBooks }">
+			<div class="container" style="margin-top: 3%">
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>Tên</th>
+							<th>Giá</th>
+						</tr>
+					</thead>
+					<c:forEach var="book" items="${listBooks.content }">
 						<tr>
 							<td>${book.name }</td>
 							<td>${book.price }</td>
@@ -59,8 +59,14 @@
 							</c:forEach>
 						</tr>
 					</c:forEach>
-				</tbody>
-			</table>
+				</table>
+			</div>
+			<ul>
+				<li><c:forEach var="i" items="${pageNumbers}">
+						<a style="color: red;"
+							href="/contents/${id }/${name }/?page=${i }">${i }</a>
+					</c:forEach></li>
+			</ul>
 		</article>
 		<footer>FOOTER</footer>
 	</div>

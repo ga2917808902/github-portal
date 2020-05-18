@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.portal.Repositories.IImageBookRepository;
-import com.portal.models.Book;
 import com.portal.models.ImageBook;
 
 @Service
@@ -38,7 +37,12 @@ public class ImageBookService {
 	public void delete(int id) {
 		repo.deleteById(id);
 	}
-
+	
+	/**
+	 * Hàm dùng để thêm ảnh vào thư mục
+	 * @param imageFile
+	 * @throws IOException
+	 */
 	public void saveImage(MultipartFile imageFile) throws IOException {
 		String folder = "E:\\Eclipse\\github-portal-1\\Portal-1\\src\\main\\webapp\\resources\\image\\product\\";
 		byte[] bytes = imageFile.getBytes();
@@ -47,6 +51,11 @@ public class ImageBookService {
 
 	}
 
+	/**
+	 * Hàm dùng để kiểm tra loại hình của book(ảnh chính, ảnh phụ)
+	 * @param id
+	 * @return int
+	 */
 	public int resultImageBook(int id) {
 		List<ImageBook> list = this.findByBook(id);
 		if (list.isEmpty()) {

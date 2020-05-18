@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.portal.Repositories.IBookRepository;
@@ -15,6 +17,10 @@ public class BookService {
 
 	@Autowired
 	IBookRepository repo;
+	
+	public Page<Book> findAll(Pageable pageable){
+		return repo.findAll(pageable);
+	}
 	
 	public List<Book> findAll(){
 		return (List<Book>) repo.findAll();
@@ -32,8 +38,12 @@ public class BookService {
 		repo.deleteById(id);
 	}
 	
-	public List<Book> findByBranch(Branch branch){
-		return repo.findByBranch(branch);
+	public Page<Book> findByBranch(Branch branch, Pageable pageable){
+		return repo.findByBranch(branch, pageable);
+	}
+	
+	public Page<Book> findByBook(int id, Pageable pageable){
+		return repo.findBook(id, pageable);
 	}
 	
 }

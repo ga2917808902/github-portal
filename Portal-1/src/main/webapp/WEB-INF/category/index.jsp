@@ -45,8 +45,8 @@
 						<h4 id="ModalTitle"></h4>
 					</div>
 					<div class="modal-body">
-						<form:form action="category/save" method="post" modelAttribute="category"
-							id="form">
+						<form:form action="category/save" method="post"
+							modelAttribute="category" id="form">
 							<fieldset id="SubmitForm">
 								<label>ID</label>
 								<form:input path="id" readonly="true" />
@@ -65,7 +65,8 @@
 			</div>
 		</div>
 		<div class="container" style="margin-top: 3%">
-			<button class="btn btn-info" onclick="newCategory();">Thêm mới</button>
+			<button class="btn btn-info" onclick="newCategory();">Thêm
+				mới</button>
 			<br /> <br />
 			<table class="table table-striped">
 				<thead>
@@ -74,7 +75,7 @@
 						<th>Name</th>
 					</tr>
 				</thead>
-				<c:forEach var="category" items="${listCategories }">
+				<c:forEach var="category" items="${listCategories.content }">
 					<tr>
 						<td>${category.id }</td>
 						<td>${category.name }</td>
@@ -87,6 +88,13 @@
 				</c:forEach>
 			</table>
 		</div>
+		<ul>
+			<li><c:forEach var="i" items="${pageNumbers}">
+					<a style="color: red;" href="/category/?page=${i }">${i }</a>
+				</c:forEach>
+			</li>
+		</ul>
+
 
 		<footer>FOOTER</footer>
 	</div>
