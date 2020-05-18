@@ -12,6 +12,12 @@
 	type="text/css" />
 <link rel="stylesheet" type="text/css"
 	href="../resources/css/layout.css" />
+<style type="text/css">
+img {
+	height: 45px;
+	width: 60px;
+}
+</style>
 <title>Insert title here</title>
 </head>
 <body>
@@ -36,6 +42,7 @@
 						<tr>
 							<th>Tên</th>
 							<th>Giá</th>
+							<th>Ảnh</th>
 						</tr>
 					</thead>
 					<c:forEach var="book" items="${listBooks.content }">
@@ -54,9 +61,10 @@
 							</c:choose>
 							<c:forEach var="image" items="${book.imageBook }">
 								<c:if test="${image.main == 1 }">
-									<td>${image.name }</td>
+									<td><img src="../resources/image/product/${image.name }"></img></td>
 								</c:if>
 							</c:forEach>
+							<td><a href="#">Xem chi tiết</a></td>
 						</tr>
 					</c:forEach>
 				</table>

@@ -28,6 +28,9 @@
 				<br />
 			</c:forEach>
 		</aside>
+		<article>
+			
+		</article>
 		<footer>FOOTER</footer>
 	</div>
 </body>
