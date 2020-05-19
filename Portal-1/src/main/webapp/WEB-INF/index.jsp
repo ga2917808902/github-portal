@@ -10,6 +10,12 @@
 <base href="${pageContext.servletContext.contextPath}/">
 <link rel="stylesheet" type="text/css"
 	href="../resources/css/layout.css" />
+<style type="text/css">
+img {
+	height: 45px;
+	width: 60px;
+}
+</style>
 <title>Insert title here</title>
 </head>
 <body>
@@ -29,7 +35,26 @@
 			</c:forEach>
 		</aside>
 		<article>
-			
+			<br />
+			<p>Sách được thêm gần đây</p>
+			<table border="1">
+				<tr>
+					<th>Tên</th>
+					<th>Giá</th>
+					<th>Ảnh</th>
+				</tr>
+				<c:forEach var="book" items="${recentlyBooks }">
+					<tr>
+						<td>${book.name }</td>
+						<td>${book.price }</td>
+						<c:forEach var="image" items="${book.imageBook }">
+							<c:if test="${image.main == 1 }">
+								<td><img src="../resources/image/product/${image.name }"></img></td>
+							</c:if>
+						</c:forEach>
+					</tr>
+				</c:forEach>
+			</table>
 		</article>
 		<footer>FOOTER</footer>
 	</div>

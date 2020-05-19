@@ -46,4 +46,12 @@ public class BookService {
 		return repo.findBook(id, pageable);
 	}
 	
+	public List<Book> recentlyBook(){
+		return repo.recentlyBook();
+	}
+	
+	public Page<Book> findLikeName(String name, Pageable pageable){
+		return repo.findLikeName(name, pageable);
+	}
+	
 }

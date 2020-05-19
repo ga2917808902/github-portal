@@ -36,10 +36,12 @@
 		<nav>
 			<jsp:include page="../menu.jsp" />
 		</nav>
-		<br />
 		<div class="container" style="margin-top: 3%">
-			<a href="/book/new" class="btn btn-info">Thêm mới</a>
-			<br /> <br />
+			<form action="book/search" method="get">
+				<input type="text" name="q" />
+				<button>Search</button>
+			</form><br/>
+			<a href="/book/new" class="btn btn-info">Thêm mới</a> <br /> <br />
 			<table class="table table-striped">
 				<thead>
 					<tr>
@@ -51,9 +53,11 @@
 					<tr>
 						<td>${book.id }</td>
 						<td>${book.name }</td>
-						<td><a class="btn btn-info" href="/image-book/view/${book.id }">Xem ảnh</a></td>
+						<td><a class="btn btn-info"
+							href="/image-book/view/${book.id }">Xem ảnh</a></td>
 						<td><a class="btn btn-warning" href="/book/edit/${book.id }">Sửa</a></td>
-						<td><a class="btn btn-danger" onClick="deleteBook(${book.id});">Xóa</a></td>
+						<td><a class="btn btn-danger"
+							onClick="deleteBook(${book.id});">Xóa</a></td>
 					</tr>
 
 				</c:forEach>

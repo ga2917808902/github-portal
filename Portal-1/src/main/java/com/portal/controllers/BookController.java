@@ -156,6 +156,20 @@ public class BookController {
 
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
+	
+	@GetMapping("search")
+	public String searchBook(ModelMap model, @RequestParam("q") String name,
+			@RequestParam(defaultValue = "1") int page) {
+		Page<Book> listBooks = service.findLikeName(name, PageRequest.of(page - 1, 10));
+		int totalPages = listBooks.getTotalPages();
+		if (totalPages > 0) {
+			List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
+			model.addAttribute("pageNumbers", pageNumbers);
+		}
+		model.addAttribute("listBooks", listBooks);
+
+		return "book/index";
+	}
 
 	@ModelAttribute("publishings")
 	public List<Publishing> getPublishing() {
