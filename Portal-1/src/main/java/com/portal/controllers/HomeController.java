@@ -39,7 +39,7 @@ public class HomeController {
 	public String searchBook(ModelMap model, @RequestParam("q") String name,
 			@RequestParam(defaultValue = "1") int page) {
 		List<Object[]> listCategories = categoryService.contents();
-		Page<Book> listBooks = bookService.findLikeName(name, PageRequest.of(page - 1, 10));
+		Page<Book> listBooks = bookService.findByLikeName(name.trim(), PageRequest.of(page - 1, 10));
 		int totalPages = listBooks.getTotalPages();
 		if (totalPages > 0) {
 			List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());

@@ -28,8 +28,10 @@ public interface IBookRepository extends JpaRepository<Book, Integer>{
 	Page<Book> findByBranch(Branch branch, Pageable pageable);
 	
 	@Query(nativeQuery = true,value="SELECT * FROM BOOK WHERE name like %?1%", countQuery = "SELECT * FROM BOOK WHERE name like %?1%")
-	Page<Book> findLikeName(String name, Pageable pageable);
+	Page<Book> findByLikeName(String name, Pageable pageable);
 	
 	@Query(nativeQuery = true, value = "SELECT top(10) * FROM book ORDER BY created_at desc")
 	List<Book> recentlyBook();
+	
+	Book findByName(String name);
 }

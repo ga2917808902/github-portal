@@ -6,7 +6,6 @@
 <head>
 <meta charset="UTF-8">
 <script src="https://kit.fontawesome.com/bc6916a687.js"></script>
-<script type="text/javascript" src="resources/js/jquery-3.4.1.min.js"></script>
 <base href="${pageContext.servletContext.contextPath}/">
 <link rel="stylesheet" type="text/css"
 	href="../resources/css/layout.css" />
@@ -52,6 +51,7 @@ img {
 								<td><img src="../resources/image/product/${image.name }"></img></td>
 							</c:if>
 						</c:forEach>
+						<td><a href="${book.name }&${book.id}">Chi tiết</a></td>
 					</tr>
 				</c:forEach>
 			</table>

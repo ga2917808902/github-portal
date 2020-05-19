@@ -51,6 +51,7 @@ img {
 								<td><img src="../resources/image/product/${image.name }"></img></td>
 							</c:if>
 						</c:forEach>
+						<td><a href="${book.name }&${book.id}">Chi tiết</a></td>
 					</tr>
 				</c:forEach>
 			</table>

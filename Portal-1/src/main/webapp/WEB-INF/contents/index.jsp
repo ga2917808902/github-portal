@@ -64,7 +64,7 @@ img {
 									<td><img src="../resources/image/product/${image.name }"></img></td>
 								</c:if>
 							</c:forEach>
-							<td><a href="#">Xem chi tiết</a></td>
+							<td><a href="${book.name }">Chi tiết</a></td>
 						</tr>
 					</c:forEach>
 				</table>

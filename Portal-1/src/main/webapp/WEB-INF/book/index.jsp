@@ -46,13 +46,15 @@
 				<thead>
 					<tr>
 						<th>ID</th>
-						<th>Name</th>
+						<th>Tên sách</th>
+						<th>Lượt xem</th>
 					</tr>
 				</thead>
 				<c:forEach var="book" items="${listBooks.content }">
 					<tr>
 						<td>${book.id }</td>
 						<td>${book.name }</td>
+						<td>${book.views }</td>
 						<td><a class="btn btn-info"
 							href="/image-book/view/${book.id }">Xem ảnh</a></td>
 						<td><a class="btn btn-warning" href="/book/edit/${book.id }">Sửa</a></td>

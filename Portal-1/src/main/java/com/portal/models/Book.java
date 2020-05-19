@@ -44,7 +44,11 @@ public class Book {
 	private List<BookAuthor> bookAuthor = new ArrayList<>();
 	private LocalDateTime createdAt;
 	private LocalDateTime updatedAt;
-
+	private int views;
+	private String link;
+	@OneToMany(mappedBy = "book")
+	private List<Comment> comment = new ArrayList<Comment>();
+	
 	public Book() {
 	}
 
@@ -146,5 +150,21 @@ public class Book {
 
 	public void setBookAuthor(List<BookAuthor> bookAuthor) {
 		this.bookAuthor = bookAuthor;
+	}
+	
+	public int getViews() {
+		return views;
+	}
+
+	public void setViews(int views) {
+		this.views = views;
+	}
+	
+	public String getLink() {
+		return link;
+	}
+
+	public void setLink(String link) {
+		this.link = link;
 	}
 }

@@ -54,6 +54,10 @@
 				<form:textarea path="note" />
 			</div>
 			<div>
+				<label>Link</label>
+				<form:input path="link" />
+			</div>
+			<div>
 				<label>Nhà xuất bản</label>
 				<form:select path="publishing" items="${publishings }"
 					itemLabel="name" itemValue="id" />
