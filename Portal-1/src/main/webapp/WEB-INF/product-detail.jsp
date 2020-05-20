@@ -7,6 +7,7 @@
 <html>
 <head>
 <title>Insert title here</title>
+<script type="text/javascript" src="resources/js/jquery-3.4.1.min.js"></script>
 <base href="${pageContext.servletContext.contextPath}/">
 <link rel="stylesheet" type="text/css"
 	href="../resources/css/layout.css" />
@@ -48,36 +49,47 @@ img {
 					<td><a href="updating">Send link download to Friend(Email)</a></td>
 				</tr>
 			</table>
-			<br/>
-			
+			<br />
+
 			<table border="1">
 				<tr>
 					<td>Bình luận bởi</td>
 					<td>Nội dung</td>
-					<td>Thời gian đăng</td>
+					<td>Thời gian</td>
 				</tr>
 				<c:forEach var="cm" items="${listComments }">
 					<tr>
 						<td>Người lạ</td>
 						<td>${cm.content }</td>
 						<td>${cm.updatedAt }</td>
-						<td><a href="/edit-comment/${cm.id }">Chỉnh sửa</a></td>
+						<td><button onClick="editComment('${cm.id}');">Chỉnh
+								sửa</button></td>
 						<td><a href="/delete-comment/${cm.id }">Xóa bình luận</a></td>
 					</tr>
 				</c:forEach>
 			</table>
-			
-			<br/>
+
+			<br />
 			<form:form action="comment" modelAttribute="comment" method="post">
-				<form:hidden path="id"/>
-				<form:textarea path="content"/>
-				<input type="hidden" name="book" value="${id }"/>
-				<form:hidden path="createdAt"/>
-				<form:hidden path="updatedAt"/>
+				<form:hidden path="id" />
+				<form:textarea path="content" />
+				<input type="hidden" name="book" value="${id }" />
+				<form:hidden path="createdAt" />
+				<form:hidden path="updatedAt" />
 				<button>Đăng</button>
 			</form:form>
 		</article>
 		<footer>FOOTER</footer>
 	</div>
+
+	<script>
+		function editComment(id) {
+			var url = "/edit-comment/" + id;
+			$.getJSON(url, function(data) {
+				$("#id").val(data.id);
+				$("#content").val(data.content);
+			});
+		}
+	</script>
 </body>
 </html>

@@ -160,7 +160,7 @@ public class BookController {
 	@GetMapping("search")
 	public String searchBook(ModelMap model, @RequestParam("q") String name,
 			@RequestParam(defaultValue = "1") int page) {
-		Page<Book> listBooks = service.findByLikeName(name, PageRequest.of(page - 1, 10));
+		Page<Book> listBooks = service.findByLikeName(name.trim(), PageRequest.of(page - 1, 10));
 		int totalPages = listBooks.getTotalPages();
 		if (totalPages > 0) {
 			List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());

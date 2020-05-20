@@ -33,5 +33,8 @@ public interface IBookRepository extends JpaRepository<Book, Integer>{
 	@Query(nativeQuery = true, value = "SELECT top(10) * FROM book ORDER BY created_at desc")
 	List<Book> recentlyBook();
 	
+	@Query(nativeQuery = true, value = "SELECT top(10) * FROM book ORDER BY views desc")
+	List<Book> topViews();
+	
 	Book findByName(String name);
 }

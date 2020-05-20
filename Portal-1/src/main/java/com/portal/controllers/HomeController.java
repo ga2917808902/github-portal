@@ -29,6 +29,8 @@ public class HomeController {
 	public String categoryContent(ModelMap model) {
 		List<Object[]> listCategories = categoryService.contents();
 		List<Book> recentlyBooks = bookService.recentlyBook();
+		List<Book> topViews = bookService.topViews();
+		model.addAttribute("topViews", topViews);
 		model.addAttribute("listCategories", listCategories);
 		model.addAttribute("recentlyBooks", recentlyBooks);
 

@@ -57,4 +57,8 @@ public class BookService {
 	public Book findByName(String name) {
 		return repo.findByName(name);
 	}
+	
+	public List<Book> topViews(){
+		return repo.topViews();
+	}
 }

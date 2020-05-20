@@ -18,6 +18,18 @@ img {
 <title>Insert title here</title>
 </head>
 <body>
+	<%
+		Integer hitsCount = (Integer) application.getAttribute("hitCounter");
+		if (hitsCount == null || hitsCount == 0) {
+			/* First visit */
+			hitsCount = 1;
+		} else {
+			/* return visit */
+			hitsCount += 1;
+		}
+		application.setAttribute("hitCounter", hitsCount);
+	%>
+
 	<div class="container">
 		<header>
 			<h1>Portal</h1>
@@ -55,6 +67,32 @@ img {
 					</tr>
 				</c:forEach>
 			</table>
+
+			<br />
+			<p>Sách được tìm kiếm nhiều nhất</p>
+			<table border="1">
+				<tr>
+					<th>Tên</th>
+					<th>Giá</th>
+					<th>Ảnh</th>
+				</tr>
+				<c:forEach var="book" items="${topViews }">
+					<tr>
+						<td>${book.name }</td>
+						<td>${book.price }</td>
+						<c:forEach var="image" items="${book.imageBook }">
+							<c:if test="${image.main == 1 }">
+								<td><img src="../resources/image/product/${image.name }"></img></td>
+							</c:if>
+						</c:forEach>
+						<td><a href="${book.name }&${book.id}">Chi tiết</a></td>
+					</tr>
+				</c:forEach>
+			</table>
+			<p>
+				Total number of visits:
+				<%=hitsCount%></p>
+
 		</article>
 		<footer>FOOTER</footer>
 	</div>
