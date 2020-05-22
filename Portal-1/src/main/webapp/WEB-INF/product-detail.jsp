@@ -40,7 +40,7 @@ img {
 				<tr>
 					<td>${book.name }</td>
 					<td>${book.price }</td>
-					<td>${book.views }</td>
+					<td>${views }</td>
 					<c:forEach var="image" items="${book.imageBook }">
 						<td><img src="../resources/image/product/${image.name }"></img></td>
 					</c:forEach>
