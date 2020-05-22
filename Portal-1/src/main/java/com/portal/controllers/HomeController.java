@@ -10,9 +10,12 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.portal.models.Book;
+import com.portal.models.Category;
 import com.portal.services.BookService;
 import com.portal.services.CategoryService;
 
@@ -28,9 +31,25 @@ public class HomeController {
 	@GetMapping(value = { "index", "/" })
 	public String categoryContent(ModelMap model) {
 		List<Object[]> listCategories = categoryService.contents();
+		List<Category> topFourRankViews = categoryService.topFourRankViews();
 		List<Book> recentlyBooks = bookService.recentlyBook();
 		List<Book> topViews = bookService.topViews();
 		model.addAttribute("topViews", topViews);
+		model.addAttribute("topFourRankViews", topFourRankViews);
+		model.addAttribute("listCategories", listCategories);
+		model.addAttribute("recentlyBooks", recentlyBooks);
+
+		return "index";
+	}
+
+	@GetMapping("rank-views-categor?")
+	public String rankViewsCategory(ModelMap model, @RequestParam("q") String query) {
+		List<Book> topViews = bookService.TopEightBookViews(query);
+		List<Object[]> listCategories = categoryService.contents();
+		List<Category> topFourRankViews = categoryService.topFourRankViews();
+		List<Book> recentlyBooks = bookService.recentlyBook();
+		model.addAttribute("topViews", topViews);
+		model.addAttribute("topFourRankViews", topFourRankViews);
 		model.addAttribute("listCategories", listCategories);
 		model.addAttribute("recentlyBooks", recentlyBooks);
 

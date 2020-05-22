@@ -8,6 +8,12 @@
 <head>
 <meta charset="UTF-8">
 <base href="${pageContext.servletContext.contextPath}/">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="resources/js/jquery-3.4.1.min.js"></script>
 <script src="../resources/bootstrap/jquery-1.10.2.min.js"></script>
 <script src="../resources/bootstrap/bootstrap.min.js"></script>
@@ -40,8 +46,9 @@
 			<form action="book/search" method="get">
 				<input type="text" name="q" />
 				<button>Search</button>
-			</form><br/>
-			<a href="/book/new" class="btn btn-info">Thêm mới</a> <br /> <br />
+			</form>
+			<br /> <a href="/book/new" class="btn btn-info">Thêm mới</a> <br />
+			<br />
 			<table class="table table-striped">
 				<thead>
 					<tr>
@@ -65,10 +72,40 @@
 				</c:forEach>
 			</table>
 		</div>
-		<ul>
-			<li><c:forEach var="i" items="${pageNumbers}">
-					<a style="color: red;" href="/book/?page=${i }">${i }</a>
-				</c:forEach></li>
+		<ul class="pagination pagination">
+			<li>Showing ${number + 1 } to 10 of ${totalElements }</li>
+ 			<c:choose>
+				<c:when test="${current == 1 }">
+				</c:when>
+				<c:otherwise>
+					<li><a href="/book/?page=${1 }">First</a></li>
+					<li><a href="/book/?page=${current - 1 }">Prev</a></li>
+				</c:otherwise>
+			</c:choose>
+
+			<c:forEach begin="${begin }" end="${end }" var="i">
+				<c:choose>
+					<c:when test="${i == current }">
+						<li class="active"><a href="/book/?page=${i }">${i }</a></li>
+					</c:when>
+					<c:otherwise>
+						<li ><a href="/book/?page=${i }">${i}</a></li>
+					</c:otherwise>
+				</c:choose>
+			</c:forEach>
+
+			<c:choose>
+				<c:when test="${current == 1 }">
+					<li><a href="/book/?page=${current + 1}">Next</a></li>
+					<li><a href="/book/?page=${last }">Last</a></li>
+				</c:when>
+				<c:when test="${current == last }">
+				</c:when>
+				<c:otherwise>
+					<li><a href="/book/?page=${current + 1}">Next</a></li>
+					<li><a href="/book/?page=${last }">Last</a></li>
+				</c:otherwise>
+			</c:choose>
 		</ul>
 
 		<footer>FOOTER</footer>

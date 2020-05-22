@@ -77,6 +77,7 @@
 				<form:select path="language" items="${languages }" itemLabel="name"
 					itemValue="id" />
 			</div>
+			<form:hidden path="views" />
 			<form:hidden path="createdAt" />
 			<form:hidden path="updatedAt" />
 

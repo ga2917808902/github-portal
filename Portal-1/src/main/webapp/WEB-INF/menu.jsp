@@ -11,7 +11,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<a href="/">Trang chủ</a> |
 	<div class="dropdown">
 		<a><span>Quản lý</span></a>
 		<div class="dropdown-content">
@@ -21,9 +20,5 @@
 				href="/author/">Tác giả</a><br /> <a href="/lang/">Ngôn ngữ</a>
 		</div>
 	</div>
-	<form action="search" method="get">
-		<input type="text" name="q" />
-		<button>Search</button>
-	</form>
 </body>
 </html>

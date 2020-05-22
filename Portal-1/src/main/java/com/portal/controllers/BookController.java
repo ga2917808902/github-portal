@@ -70,8 +70,15 @@ public class BookController {
 		Page<Book> listBooks = service.findAll(PageRequest.of(page - 1, 10));
 		int totalPages = listBooks.getTotalPages();
 		if (totalPages > 0) {
-			List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
-			model.addAttribute("pageNumbers", pageNumbers);
+			int current = listBooks.getNumber() + 1;
+			int begin = Math.max(1, current - 5);
+			int end = Math.min(begin + 5, totalPages);
+			model.addAttribute("begin", begin);
+			model.addAttribute("end", end);
+			model.addAttribute("last", totalPages);
+			model.addAttribute("number", listBooks.getNumber());
+			model.addAttribute("current", current);
+			model.addAttribute("totalElements", listBooks.getTotalElements());
 		}
 		model.addAttribute("listBooks", listBooks);
 

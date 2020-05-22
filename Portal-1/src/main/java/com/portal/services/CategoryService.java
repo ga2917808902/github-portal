@@ -42,6 +42,10 @@ public class CategoryService {
 		return repo.countBook(id);
 	}
 	
+	public List<Category> topFourRankViews(){
+		return repo.topFourRankViews();
+	}
+	
 	/**
 	 * Hàm dùng để count book có trong category
 	 * @return danh sách category

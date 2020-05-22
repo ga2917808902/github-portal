@@ -69,6 +69,10 @@ public class BookService {
 	public List<Book> topViews() {
 		return repo.topViews();
 	}
+	
+	public List<Book> TopEightBookViews(String name){
+		return repo.TopEightBookViews(name);
+	}
 
 	public int processViews(Book book) {
 		if (mapBooks.containsKey(book.getId())) {
