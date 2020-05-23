@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.portal.models.Book;
 import com.portal.models.Comment;
 import com.portal.services.BookService;
+import com.portal.services.CategoryService;
 import com.portal.services.CommentService;
 
 @Controller
@@ -35,6 +36,9 @@ public class ProductController {
 
 	@Autowired
 	CommentService commentService;
+	
+	@Autowired
+	CategoryService categoryService;
 
 	static LocalDateTime CREATED_AT;
 
@@ -44,6 +48,8 @@ public class ProductController {
 		Book book = bookService.findByName(name);
 		int views =  bookService.processViews(book);
 		List<Comment> listComments = commentService.findByBook(new Book(id));
+		List<Object[]> listCategories = categoryService.contents();
+		model.addAttribute("listCategories", listCategories);
 		model.addAttribute("listComments", listComments);
 		model.addAttribute("book", book);
 		model.addAttribute("views", views);

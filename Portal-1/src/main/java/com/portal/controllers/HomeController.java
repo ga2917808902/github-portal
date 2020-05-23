@@ -34,6 +34,7 @@ public class HomeController {
 		List<Category> topFourRankViews = categoryService.topFourRankViews();
 		List<Book> recentlyBooks = bookService.recentlyBook();
 		List<Book> topViews = bookService.topViews();
+		bookService.modelItem(model, recentlyBooks);
 		model.addAttribute("topViews", topViews);
 		model.addAttribute("topFourRankViews", topFourRankViews);
 		model.addAttribute("listCategories", listCategories);

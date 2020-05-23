@@ -4,13 +4,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.ModelMap;
 
 import com.portal.Repositories.IBookRepository;
 import com.portal.models.Book;
@@ -72,6 +71,21 @@ public class BookService {
 	
 	public List<Book> TopEightBookViews(String name){
 		return repo.TopEightBookViews(name);
+	}
+	
+	/**
+	 * Hàm dùng chung để hiển thị item trên trang chủ
+	 * @param <T>
+	 */
+	public <T> void modelItem(ModelMap model, List<T> list) {
+		if (list.size() > 0) {
+			model.addAttribute("begin1", 0);
+			model.addAttribute("end1", 2);
+			model.addAttribute("begin2", 3);
+			model.addAttribute("end2", 5);
+			model.addAttribute("begin3", 6);
+			model.addAttribute("end3", 8);
+		}
 	}
 
 	public int processViews(Book book) {
