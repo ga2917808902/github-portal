@@ -63,22 +63,22 @@ public class AuthorService {
 	 * @return mid(=0) nếu có
 	 */
 	int binarySearch(List<Author> list, String x) {
-        int low = 0;
-        int high = list.size() - 1;
+        int left = 0;
+        int right = list.size() - 1;
         int mid;
 
-        while (low <= high) {
-            mid = (low + high) / 2;
+        while (left <= right) {
+            mid = (left + right) / 2;
 
             if (list.get(mid).getName().compareTo(x) < 0) {
-                low = mid + 1;
+            	left = mid + 1;
             } else if (list.get(mid).getName().compareTo(x) > 0) {
-                high = mid - 1;
+            	right = mid - 1;
             } else {
                 return mid;
             }
         }
 
-        return -1;
+        return 0;
     }
 }

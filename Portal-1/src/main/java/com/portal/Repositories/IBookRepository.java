@@ -44,4 +44,6 @@ public interface IBookRepository extends JpaRepository<Book, Integer>{
 			+ "GROUP BY book.id, book.name, book.book_cover_id, book.branch_id, book.lang_id, book.link, book.note, book.price, book.created_at, book.updated_at, book.views, book.publishing_id "
 			+ "ORDER BY SUM(views) desc ")
 	List<Book> TopEightBookViews(String name);
+	
+	public List<Book> findByBranchOrderByIdAsc(Branch branch);
 }

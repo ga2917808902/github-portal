@@ -3,12 +3,9 @@ package com.portal.controllers;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.time.LocalDateTime;
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import javax.servlet.http.HttpSession;
 
@@ -36,19 +33,21 @@ public class ProductController {
 
 	@Autowired
 	CommentService commentService;
-	
+
 	@Autowired
 	CategoryService categoryService;
 
 	static LocalDateTime CREATED_AT;
 
-	@GetMapping("{name}&{id}")
-	public String ProductDetail(ModelMap model, @PathVariable("name") String name, @PathVariable("id") int id,
+	@GetMapping("{name}&{id}&{branchId}")
+	public String ProductDetail(ModelMap model, @PathVariable("name") String name, @PathVariable("id") int id, @PathVariable("branchId") int branchId,
 			HttpSession session) {
 		Book book = bookService.findByName(name);
-		int views =  bookService.processViews(book);
+		int views = bookService.processViews(book);
 		List<Comment> listComments = commentService.findByBook(new Book(id));
 		List<Object[]> listCategories = categoryService.contents();
+		List<Book> recommendBooks = bookService.recommendBooks(branchId, id);
+		model.addAttribute("recommendBooks", recommendBooks);
 		model.addAttribute("listCategories", listCategories);
 		model.addAttribute("listComments", listComments);
 		model.addAttribute("book", book);
@@ -56,6 +55,7 @@ public class ProductController {
 		model.addAttribute("comment", new Comment());
 		session.setAttribute("id", id);
 		session.setAttribute("name", name);
+		session.setAttribute("branchId", branchId);
 
 		return "product-detail";
 	}
@@ -64,6 +64,7 @@ public class ProductController {
 	public String comment(ModelMap model, @ModelAttribute("comment") Comment comment, HttpSession session)
 			throws UnsupportedEncodingException {
 		int idProduct = (Integer) session.getAttribute("id");
+		int branchId = (Integer) session.getAttribute("branchId");
 		String nameProduct = (String) session.getAttribute("name");
 		LocalDateTime now = LocalDateTime.now();
 		if (comment.getId() > 0) {
@@ -74,7 +75,7 @@ public class ProductController {
 			comment.setUpdatedAt(now);
 		}
 		commentService.saveOrUpdate(comment);
-		String url = nameProduct + "&" + idProduct;
+		String url = nameProduct + "&" + idProduct + "&" + branchId;
 
 		return "redirect:/" + URLEncoder.encode(url, "UTF-8").replace("+", "%20");
 	}
@@ -89,10 +90,11 @@ public class ProductController {
 	@GetMapping("delete-comment/{id}")
 	public String deleteComment(@PathVariable("id") long id, HttpSession session) throws UnsupportedEncodingException {
 		int idProduct = (Integer) session.getAttribute("id");
+		int branchId = (Integer) session.getAttribute("branchId");
 		String nameProduct = (String) session.getAttribute("name");
 		commentService.delete(id);
 
-		String url = nameProduct + "&" + idProduct;
+		String url = nameProduct + "&" + idProduct + "&" + branchId;
 		return "redirect:/" + URLEncoder.encode(url, "UTF-8").replace("+", "%20");
 	}
 

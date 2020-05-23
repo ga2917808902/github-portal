@@ -97,6 +97,7 @@
 	<!-- Top product views  Section Begin -->
 	<section class="categories">
 		<div class="container">
+		<br/><br/><br/>
 			<h5 style="color: #7fad39">
 				<i>Sản phẩm mới nhất</i>
 			</h5>
@@ -110,10 +111,10 @@
 									<div class="categories__item set-bg"
 										data-setbg="../resources/image/product/${image.name }"></div>
 								</c:if>
-								<p>
-									<a href="${book.name }&${book.id}">${book.name }</a>
-								</p>
 							</c:forEach>
+							<p>
+								<a href="${book.name }&${book.id}&${book.branch.id }">${book.name }</a>
+							</p>
 						</div>
 					</c:forEach>
 				</div>
@@ -158,7 +159,7 @@
 							</c:forEach>
 							<div class="featured__item__text">
 								<h6>
-									<a href="${book.name }&${book.id}">${book.name }</a>
+									<a href="${book.name }&${book.id}&${book.branch.id }">${book.name }</a>
 								</h6>
 								<h5>${book.price }</h5>
 							</div>

@@ -1,5 +1,6 @@
 package com.portal.services;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.ModelMap;
 
 import com.portal.Repositories.IBookRepository;
+import com.portal.models.Author;
 import com.portal.models.Book;
 import com.portal.models.Branch;
 
@@ -68,13 +70,32 @@ public class BookService {
 	public List<Book> topViews() {
 		return repo.topViews();
 	}
-	
-	public List<Book> TopEightBookViews(String name){
+
+	public List<Book> TopEightBookViews(String name) {
 		return repo.TopEightBookViews(name);
 	}
 	
 	/**
+	 * Hàm dùng để lấy ngẫu nhiên 4 book liên quan đến branch(ngành)
+	 * @param branchId
+	 * @param bookId
+	 * @return
+	 */
+
+	public List<Book> recommendBooks(int branchId, int bookId) {
+		List<Book> recommendBooks = repo.findByBranchOrderByIdAsc(new Branch(branchId));
+		int currentId = algorithmForRandomBook(recommendBooks, bookId);
+		recommendBooks.remove(currentId);
+		Collections.shuffle(recommendBooks);
+		int random = 4;
+		List<Book> randomBooks = recommendBooks.subList(0, random);
+	
+		return randomBooks;
+	}
+
+	/**
 	 * Hàm dùng chung để hiển thị item trên trang chủ
+	 * 
 	 * @param <T>
 	 */
 	public <T> void modelItem(ModelMap model, List<T> list) {
@@ -101,7 +122,25 @@ public class BookService {
 			book.setViews(views);
 			mapBooks.put(book.getId(), book);
 		}
-		
+
 		return views;
+	}
+
+	public int algorithmForRandomBook(List<Book> list, int id) {
+		int left = 0;
+		int right = list.size() - 1;
+		int mid = 0;
+		while (left <= right) {
+			mid = (right + left) / 2;
+			if (list.get(mid).getId() < id) {
+				left = mid + 1;
+			} else if (list.get(mid).getId() > id) {
+				right = mid - 1;
+			} else {
+				return mid;
+			}
+		}
+
+		return 0;
 	}
 }
