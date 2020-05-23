@@ -69,11 +69,41 @@ img {
 					</c:forEach>
 				</table>
 			</div>
-			<ul>
-				<li><c:forEach var="i" items="${pageNumbers}">
-						<a style="color: red;" href="/contents/${id }/?page=${i }">${i }</a>
-					</c:forEach></li>
+			<ul class="pagination pagination">
+				<c:choose>
+					<c:when test="${current == 1 }">
+					</c:when>
+					<c:otherwise>
+						<li><a href="/contents/${id }/?page=${i }">First</a></li>
+						<li><a href="/contents/${id }/?page=${current - 1 }">Prev</a></li>
+					</c:otherwise>
+				</c:choose>
+
+				<c:forEach begin="${begin }" end="${end }" var="i">
+					<c:choose>
+						<c:when test="${i == current }">
+							<li class="active"><a href="/contents/${id }/?page=${i }">${i }</a></li>
+						</c:when>
+						<c:otherwise>
+							<li><a href="/contents/${id }/?page=${i }">${i}</a></li>
+						</c:otherwise>
+					</c:choose>
+				</c:forEach>
+
+				<c:choose>
+					<c:when test="${current == 1 }">
+						<li><a href="/contents/${id }/?page=${current + 1}">Next</a></li>
+						<li><a href="/contents/${id }/?page=${last }">Last</a></li>
+					</c:when>
+					<c:when test="${current == last }">
+					</c:when>
+					<c:otherwise>
+						<li><a href="/contents/${id }/?page=${current + 1}">Next</a></li>
+						<li><a href="/contents/${id }/?page=${last }">Last</a></li>
+					</c:otherwise>
+				</c:choose>
 			</ul>
+
 		</article>
 		<footer>FOOTER</footer>
 	</div>

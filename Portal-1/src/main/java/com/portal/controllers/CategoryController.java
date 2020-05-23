@@ -1,9 +1,7 @@
 package com.portal.controllers;
 
-import java.util.List;
+import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.portal.ConfigPage;
 import com.portal.models.Category;
 import com.portal.services.CategoryService;
 
@@ -27,6 +26,9 @@ public class CategoryController {
 
 	@Autowired
 	CategoryService service;
+	
+	@Autowired
+	ConfigPage<Category> configPage;
 
 	/**
 	 * 
@@ -37,11 +39,11 @@ public class CategoryController {
 	@GetMapping(value = { "index", "/" })
 	public String index(ModelMap model, @RequestParam(defaultValue = "1") int page) {
 		Page<Category> listCategories = service.findAll(PageRequest.of(page - 1, 10));
-		int totalPages = listCategories.getTotalPages();
-		if (totalPages > 0) {
-			List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
-			model.addAttribute("pageNumbers", pageNumbers);
-		}
+		Map<String, Integer> pages = configPage.pagination(listCategories);
+		model.addAttribute("begin", pages.get("begin"));
+		model.addAttribute("end", pages.get("end"));
+		model.addAttribute("last", pages.get("last"));
+		model.addAttribute("current", pages.get("current"));
 		model.addAttribute("listCategories", listCategories);
 		model.addAttribute("category", new Category());
 

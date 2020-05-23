@@ -1,6 +1,7 @@
 package com.portal.controllers;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.portal.ConfigPage;
 import com.portal.models.Author;
 import com.portal.services.AuthorService;
 
@@ -27,6 +29,9 @@ public class AuthorController {
 
 	@Autowired
 	AuthorService service;
+	
+	@Autowired
+	ConfigPage<Author> configPage;
 
 	/**
 	 * 
@@ -37,11 +42,11 @@ public class AuthorController {
 	@GetMapping(value = { "index", "/" })
 	public String index(ModelMap model, @RequestParam(defaultValue = "1") int page) {
 		Page<Author> listAuthors = service.findAll(PageRequest.of(page - 1, 10));
-		int totalPages = listAuthors.getTotalPages();
-		if (totalPages > 0) {
-			List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
-			model.addAttribute("pageNumbers", pageNumbers);
-		}
+		Map<String, Integer> pages = configPage.pagination(listAuthors);
+		model.addAttribute("begin", pages.get("begin"));
+		model.addAttribute("end", pages.get("end"));
+		model.addAttribute("last", pages.get("last"));
+		model.addAttribute("current", pages.get("current"));
 		model.addAttribute("listAuthors", listAuthors);
 		model.addAttribute("author", new Author());
 

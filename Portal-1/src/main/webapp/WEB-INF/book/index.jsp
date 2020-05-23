@@ -73,7 +73,6 @@
 			</table>
 		</div>
 		<ul class="pagination pagination">
-			<li>Showing ${number + 1 } to 10 of ${totalElements }</li>
  			<c:choose>
 				<c:when test="${current == 1 }">
 				</c:when>

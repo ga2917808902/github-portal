@@ -2,6 +2,7 @@ package com.portal.controllers;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.portal.ConfigPage;
 import com.portal.models.Author;
 import com.portal.models.Book;
 import com.portal.models.BookAuthor;
@@ -62,24 +64,20 @@ public class BookController {
 
 	@Autowired
 	BookAuthorService bookAuthorService;
+	
+	@Autowired
+	ConfigPage<Book> configPage;
 
 	static ObjectMapper mapper = new ObjectMapper();
-
+	
 	@GetMapping(value = { "index", "/" })
 	public String index(ModelMap model, @RequestParam(defaultValue = "1") int page) {
 		Page<Book> listBooks = service.findAll(PageRequest.of(page - 1, 10));
-		int totalPages = listBooks.getTotalPages();
-		if (totalPages > 0) {
-			int current = listBooks.getNumber() + 1;
-			int begin = Math.max(1, current - 5);
-			int end = Math.min(begin + 5, totalPages);
-			model.addAttribute("begin", begin);
-			model.addAttribute("end", end);
-			model.addAttribute("last", totalPages);
-			model.addAttribute("number", listBooks.getNumber());
-			model.addAttribute("current", current);
-			model.addAttribute("totalElements", listBooks.getTotalElements());
-		}
+		Map<String, Integer> pages = configPage.pagination(listBooks);
+		model.addAttribute("begin", pages.get("begin"));
+		model.addAttribute("end", pages.get("end"));
+		model.addAttribute("last", pages.get("last"));
+		model.addAttribute("current", pages.get("current"));
 		model.addAttribute("listBooks", listBooks);
 
 		return "book/index";

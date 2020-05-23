@@ -38,7 +38,7 @@ public class HomeController {
 		model.addAttribute("topFourRankViews", topFourRankViews);
 		model.addAttribute("listCategories", listCategories);
 		model.addAttribute("recentlyBooks", recentlyBooks);
-
+		
 		return "index";
 	}
 

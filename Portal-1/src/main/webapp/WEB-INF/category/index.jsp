@@ -88,11 +88,39 @@
 				</c:forEach>
 			</table>
 		</div>
-		<ul>
-			<li><c:forEach var="i" items="${pageNumbers}">
-					<a style="color: red;" href="/category/?page=${i }">${i }</a>
-				</c:forEach>
-			</li>
+		<ul class="pagination pagination">
+			<c:choose>
+				<c:when test="${current == 1 }">
+				</c:when>
+				<c:otherwise>
+					<li><a href="/category/?page=${1 }">First</a></li>
+					<li><a href="/category/?page=${current - 1 }">Prev</a></li>
+				</c:otherwise>
+			</c:choose>
+
+			<c:forEach begin="${begin }" end="${end }" var="i">
+				<c:choose>
+					<c:when test="${i == current }">
+						<li class="active"><a href="/category/?page=${i }">${i }</a></li>
+					</c:when>
+					<c:otherwise>
+						<li><a href="/category/?page=${i }">${i}</a></li>
+					</c:otherwise>
+				</c:choose>
+			</c:forEach>
+
+			<c:choose>
+				<c:when test="${current == 1 }">
+					<li><a href="/category/?page=${current + 1}">Next</a></li>
+					<li><a href="/category/?page=${last }">Last</a></li>
+				</c:when>
+				<c:when test="${current == last }">
+				</c:when>
+				<c:otherwise>
+					<li><a href="/category/?page=${current + 1}">Next</a></li>
+					<li><a href="/category/?page=${last }">Last</a></li>
+				</c:otherwise>
+			</c:choose>
 		</ul>
 
 

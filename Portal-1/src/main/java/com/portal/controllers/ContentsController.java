@@ -1,6 +1,7 @@
 package com.portal.controllers;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.portal.ConfigPage;
 import com.portal.models.Book;
 import com.portal.models.Branch;
 import com.portal.models.Category;
@@ -32,11 +34,16 @@ public class ContentsController {
 	@Autowired
 	BookService bookService;
 
+	@Autowired
+	ConfigPage<Book> configPage;
+
 	/**
-	 * Hàm dùng để xử lý thư mục của loại và tất show tất cả book của loại đó (bao gồm ngành của loại đó)
+	 * Hàm dùng để xử lý thư mục của loại và tất show tất cả book của loại đó (bao
+	 * gồm ngành của loại đó)
+	 * 
 	 * @param model
-	 * @param page mặc định là 1
-	 * @param id của loại
+	 * @param page    mặc định là 1
+	 * @param id      của loại
 	 * @param session id, set id để những phần liên quan get về sử dụng
 	 * @return trả về danh sách ngành của thư mục và tất cả sách của thư mục đó
 	 */
@@ -45,11 +52,11 @@ public class ContentsController {
 			HttpSession session) {
 		List<Object[]> listBranchs = branchService.contents(new Category(id));
 		Page<Book> listBooks = bookService.findByBook(id, PageRequest.of(page - 1, 20));
-		int totalPages = listBooks.getTotalPages();
-		if (totalPages > 0) {
-			List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
-			model.addAttribute("pageNumbers", pageNumbers);
-		}
+		Map<String, Integer> pages = configPage.pagination(listBooks);
+		model.addAttribute("begin", pages.get("begin"));
+		model.addAttribute("end", pages.get("end"));
+		model.addAttribute("last", pages.get("last"));
+		model.addAttribute("current", pages.get("current"));
 		model.addAttribute("listBranchs", listBranchs);
 		model.addAttribute("listBooks", listBooks);
 		session.setAttribute("idCategory", id);
@@ -59,10 +66,11 @@ public class ContentsController {
 
 	/**
 	 * Hàm dùng để search theo id và tên của ngành
+	 * 
 	 * @param model
-	 * @param page mặc định là 1
-	 * @param id của ngành
-	 * @param name của ngành
+	 * @param page     mặc định là 1
+	 * @param id       của ngành
+	 * @param name     của ngành
 	 * @param session, get id
 	 * @return trả về danh sách của ngành và tất cả sách của ngành đó
 	 */
@@ -73,11 +81,11 @@ public class ContentsController {
 		List<Object[]> listBranchs = branchService.contents(new Category(idCategory));
 		Branch branch = new Branch(id, name);
 		Page<Book> listBooks = bookService.findByBranch(branch, PageRequest.of(page - 1, 20));
-		int totalPages = listBooks.getTotalPages();
-		if (totalPages > 0) {
-			List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
-			model.addAttribute("pageNumbers", pageNumbers);
-		}
+		Map<String, Integer> pages = configPage.pagination(listBooks);
+		model.addAttribute("begin", pages.get("begin"));
+		model.addAttribute("end", pages.get("end"));
+		model.addAttribute("last", pages.get("last"));
+		model.addAttribute("current", pages.get("current"));
 		model.addAttribute("listBranchs", listBranchs);
 		model.addAttribute("listBooks", listBooks);
 		model.addAttribute("id", id);
