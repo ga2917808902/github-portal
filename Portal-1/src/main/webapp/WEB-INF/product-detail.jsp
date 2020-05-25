@@ -54,7 +54,7 @@
 						</div>
 						<ul style="display: none;">
 							<c:forEach var="item" items="${listCategories }">
-								<li><a href="/contents/${item[0] }"><b>${item[1]}</b></a>(${item[2] })</li>
+								<li><a href="/contents/${item[1] }&${item[0] }"><b>${item[1]}</b> (${item[2] })</a></li>
 							</c:forEach>
 						</ul>
 					</div>
@@ -96,7 +96,7 @@
 						<h2>${book.name }</h2>
 						<div class="breadcrumb__option">
 							<a href="">Trang chủ</a> <a
-								href="/contents/${book.branch.category.id }">${book.branch.name }</a>
+								href="/contents/${book.branch.category.name }&${book.branch.category.id }">${book.branch.name }</a>
 							<span>${book.name }</span>
 						</div>
 					</div>
@@ -173,13 +173,12 @@
 					<div class="product__details__tab">
 						<ul class="nav nav-tabs" role="tablist">
 							<li class="nav-item"><a class="nav-link active"
-								data-toggle="tab" href="#tabs-1" role="tab" aria-selected="true">Description</a>
-							</li>
+								data-toggle="tab" href="#tabs-1" role="tab" aria-selected="true">Ghi
+									chú</a></li>
 							<li class="nav-item"><a class="nav-link" data-toggle="tab"
-								href="#tabs-2" role="tab" aria-selected="false">Information</a>
-							</li>
+								href="#tabs-2" role="tab" aria-selected="false">Thông tin</a></li>
 							<li class="nav-item"><a class="nav-link" data-toggle="tab"
-								href="#tabs-3" role="tab" aria-selected="false">Reviews <span>(1)</span></a>
+								href="#tabs-3" role="tab" aria-selected="false">Bình luận <span>(${totalComment })</span></a>
 							</li>
 						</ul>
 						<div class="tab-content">
@@ -197,8 +196,24 @@
 							</div>
 							<div class="tab-pane" id="tabs-3" role="tabpanel">
 								<div class="product__details__tab__desc">
-									<h6>Thông tin sản phẩm</h6>
-									<p>Tính năng đang được cập nhật...</p>
+									<c:forEach var="cm" items="${listComments }">
+											<b>Người lạ</b><br/>
+											${cm.content }
+											(Thời gian ${cm.updatedAt })
+											<button onClick="editComment('${cm.id}');">Chỉnh sửa</button>
+										<a href="/delete-comment/${cm.id }">Xóa bình luận</a><br/>
+									</c:forEach>
+
+									<hr />
+									<form:form action="comment" modelAttribute="comment"
+										method="post">
+										<form:hidden path="id" />
+										<form:textarea path="content" />
+										<input type="hidden" name="book" value="${id }" />
+										<form:hidden path="createdAt" />
+										<form:hidden path="updatedAt" />
+										<button>Đăng</button>
+									</form:form>
 								</div>
 							</div>
 						</div>
@@ -215,7 +230,7 @@
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="section-title related__product__title">
-						<h2>Related Product</h2>
+						<h2>Sản phẩm liên quan</h2>
 					</div>
 				</div>
 			</div>
@@ -234,7 +249,7 @@
 								</div>
 								<div class="product__item__text">
 									<h6>
-										<a href="/${book.name }&${book.id}&${book.branch.id }">${book.name }</a>
+										<a href="/${book.name }&${book.id}&${book.branch.id }" class="text">${book.name }</a>
 									</h6>
 									<h5>${book.price }</h5>
 								</div>

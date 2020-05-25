@@ -2,14 +2,13 @@ package com.portal;
 
 import java.util.Map;
 import java.util.TreeMap;
-
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ConfigPage<T> {
 
-	public Map<String, Integer> pagination(Page<T> page){
+	public Map<String, Integer> pagination(Page<T> page) {
 		Map<String, Integer> map = new TreeMap<String, Integer>();
 		int totalPages = page.getTotalPages();
 		if (totalPages > 0) {
@@ -21,7 +20,18 @@ public class ConfigPage<T> {
 			map.put("last", totalPages);
 			map.put("current", current);
 		}
-		
+
 		return map;
 	}
+
+	/**
+	 * clear cache
+	 * 
+	 * @param page
+	 * @return
+	 */
+
+//	@CacheEvict("recentlyBook")
+//	public void flushCache() {System.out.println("CLEAR");
+//	}
 }

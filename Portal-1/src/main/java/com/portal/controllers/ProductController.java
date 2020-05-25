@@ -53,6 +53,7 @@ public class ProductController {
 		model.addAttribute("book", book);
 		model.addAttribute("views", views);
 		model.addAttribute("comment", new Comment());
+		model.addAttribute("totalComment", listComments.size());
 		session.setAttribute("id", id);
 		session.setAttribute("name", name);
 		session.setAttribute("branchId", branchId);

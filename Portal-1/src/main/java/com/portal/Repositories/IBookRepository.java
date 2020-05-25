@@ -25,6 +25,7 @@ public interface IBookRepository extends JpaRepository<Book, Integer>{
 					countQuery = "SELECT book.* FROM branch join book on branch.id=book.branch_id WHERE branch.category_id=?1")
 	Page<Book> findBook(int id, Pageable pageable);
 	
+	
 	Page<Book> findByBranch(Branch branch, Pageable pageable);
 	
 	@Query(nativeQuery = true,value="SELECT * FROM BOOK WHERE name like %?1%", countQuery = "SELECT * FROM BOOK WHERE name like %?1%")

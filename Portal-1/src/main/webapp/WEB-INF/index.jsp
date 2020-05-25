@@ -60,7 +60,7 @@
 						</div>
 						<ul>
 							<c:forEach var="item" items="${listCategories }">
-								<li><a href="/contents/${item[0] }"><b>${item[1]}</b></a>(${item[2] })</li>
+								<li><a href="/contents/${item[1] }&${item[0] }"><b>${item[1]}</b> (${item[2] })</a></li>
 							</c:forEach>
 						</ul>
 					</div>
@@ -72,7 +72,7 @@
 								<div class="hero__search__categories">
 									All Categories <span class="arrow_carrot-down"></span>
 								</div>
-								<input type="text" name="q" placeholder="What do yo u need?">
+								<input type="text" name="q" placeholder="Bạn cần tìm sản phẩm nào?">
 								<button type="submit" class="site-btn">TÌM KIẾM</button>
 							</form>
 						</div>
@@ -113,7 +113,7 @@
 								</c:if>
 							</c:forEach>
 							<p>
-								<a href="${book.name }&${book.id}&${book.branch.id }">${book.name }</a>
+								<a href="${book.name }&${book.id}&${book.branch.id }" class="text">${book.name }</a>
 							</p>
 						</div>
 					</c:forEach>
@@ -159,7 +159,7 @@
 							</c:forEach>
 							<div class="featured__item__text">
 								<h6>
-									<a href="${book.name }&${book.id}&${book.branch.id }">${book.name }</a>
+									<a href="${book.name }&${book.id}&${book.branch.id }" class="text">${book.name }</a>
 								</h6>
 								<h5>${book.price }</h5>
 							</div>
@@ -217,7 +217,7 @@
 													<img src="../resources/image/product/${image.name }">
 												</div>
 												<div class="latest-product__item__text">
-													<p>${book.name }</p>
+													<p class="text">${book.name }</p>
 													<span>${book.price }</span>
 												</div>
 											</a>
@@ -235,7 +235,7 @@
 													<img src="../resources/image/product/${image.name }">
 												</div>
 												<div class="latest-product__item__text">
-													<p>${book.name }</p>
+													<p class="text">${book.name }</p>
 													<span>${book.price }</span>
 												</div>
 											</a>
@@ -254,7 +254,7 @@
 													<img src="../resources/image/product/${image.name }">
 												</div>
 												<div class="latest-product__item__text">
-													<p>${book.name }</p>
+													<p class="text">${book.name }</p>
 													<span>${book.price }</span>
 												</div>
 											</a>
@@ -280,7 +280,7 @@
 													<img src="../resources/image/product/${image.name }">
 												</div>
 												<div class="latest-product__item__text">
-													<p>${book.name }</p>
+													<p class="text">${book.name }</p>
 													<span>${book.price }</span>
 												</div>
 											</a>
@@ -298,7 +298,7 @@
 													<img src="../resources/image/product/${image.name }">
 												</div>
 												<div class="latest-product__item__text">
-													<p>${book.name }</p>
+													<p class="text">${book.name }</p>
 													<span>${book.price }</span>
 												</div>
 											</a>
@@ -317,7 +317,7 @@
 													<img src="../resources/image/product/${image.name }">
 												</div>
 												<div class="latest-product__item__text">
-													<p>${book.name }</p>
+													<p class="text">${book.name }</p>
 													<span>${book.price }</span>
 												</div>
 											</a>
@@ -343,7 +343,7 @@
 													<img src="../resources/image/product/${image.name }">
 												</div>
 												<div class="latest-product__item__text">
-													<p>${book.name }</p>
+													<p class="text">${book.name }</p>
 													<span>${book.price }</span>
 												</div>
 											</a>
@@ -380,7 +380,7 @@
 													<img src="../resources/image/product/${image.name }">
 												</div>
 												<div class="latest-product__item__text">
-													<p>${book.name }</p>
+													<p class="text">${book.name }</p>
 													<span>${book.price }</span>
 												</div>
 											</a>
@@ -457,7 +457,7 @@
 								<li><i class="fa fa-comment-o"></i> 5</li>
 							</ul>
 							<h5>
-								<a href="#">Sách nào tốt khi bắt đầu học lập trình?</a>
+								<a href="#" class="text">Sách nào tốt khi bắt đầu học lập trình?</a>
 							</h5>
 							<p>Lập trình thường sẽ có rất nhiều ngôn ngữ lập trình như
 								Java, PHP, C#...</p>

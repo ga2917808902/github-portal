@@ -60,7 +60,6 @@ public class CategoryService {
 				listContents.add(arrays);
 			}
 		}
-
 		return listContents;
 	}
 }

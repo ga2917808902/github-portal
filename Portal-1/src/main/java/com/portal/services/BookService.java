@@ -1,6 +1,7 @@
 package com.portal.services;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,12 +9,13 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.ModelMap;
 
 import com.portal.Repositories.IBookRepository;
-import com.portal.models.Author;
 import com.portal.models.Book;
 import com.portal.models.Branch;
 
@@ -74,9 +76,24 @@ public class BookService {
 	public List<Book> TopEightBookViews(String name) {
 		return repo.TopEightBookViews(name);
 	}
-	
+
+	public Page<Book> sortByRequest(String name, int page, String request) {
+		Page<Book> listBooks = null;
+		if (request.equalsIgnoreCase("price-descending")) {
+			listBooks = findByLikeName(name.trim(), PageRequest.of(page - 1, 12, Sort.by("price").descending()));
+		} else if (request.equalsIgnoreCase("price-ascending")) {
+			listBooks = findByLikeName(name.trim(), PageRequest.of(page - 1, 12, Sort.by("price").ascending()));
+		} else if(request.equalsIgnoreCase("views")) {
+			listBooks = findByLikeName(name.trim(), PageRequest.of(page - 1, 12, Sort.by("views").descending()));
+		}else {
+			listBooks = findByLikeName(name.trim(), PageRequest.of(page - 1, 12));
+		}
+		return listBooks;
+	}
+
 	/**
 	 * Hàm dùng để lấy ngẫu nhiên 4 book liên quan đến branch(ngành)
+	 * 
 	 * @param branchId
 	 * @param bookId
 	 * @return
@@ -89,7 +106,7 @@ public class BookService {
 		Collections.shuffle(recommendBooks);
 		int random = 4;
 		List<Book> randomBooks = recommendBooks.subList(0, random);
-	
+
 		return randomBooks;
 	}
 

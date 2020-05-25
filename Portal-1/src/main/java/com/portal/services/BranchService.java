@@ -34,12 +34,16 @@ public class BranchService {
 		repo.deleteById(id);
 	}
 	
-	public List<Branch> findByCategory(Category category){
-		return repo.findByCategory(category);
+	public List<Branch> findByCategoryName(String name){
+		return repo.findByCategoryName(name);
 	}
 	
 	public int countBook(int id) {
 		return repo.countBook(id);
+	}
+	
+	public List<Branch> recommendBranch(String name){
+		return repo.recommendBranchs(name);
 	}
 	
 	/**
@@ -47,9 +51,9 @@ public class BranchService {
 	 * @param category id của loại
 	 * @return danh sách thư mục(branch)
 	 */
-	public List<Object[]> contents(Category category) {
+	public List<Object[]> contents(String name) {
 		List<Object[]> listContents = new ArrayList<>();
-		List<Branch> list = this.findByCategory(category);
+		List<Branch> list = this.findByCategoryName(name);
 		for (Branch branch : list) {
 			int countBook = this.countBook(branch.getId());
 			if (countBook > 0) {
