@@ -7,8 +7,8 @@
 <html>
 <head>
 <title>Insert title here</title>
-<script type="text/javascript" src="resources/js/jquery-3.4.1.min.js"></script>
 <base href="${pageContext.servletContext.contextPath}/">
+<script type="text/javascript" src="resources/js/jquery-3.4.1.min.js"></script>
 <!-- Google Font -->
 <link
 	href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap"
@@ -54,7 +54,8 @@
 						</div>
 						<ul style="display: none;">
 							<c:forEach var="item" items="${listCategories }">
-								<li><a href="/contents/${item[1] }&${item[0] }"><b>${item[1]}</b> (${item[2] })</a></li>
+								<li><a href="/contents/${item[1] }&${item[0] }"><b>${item[1]}</b>
+										(${item[2] })</a></li>
 							</c:forEach>
 						</ul>
 					</div>
@@ -85,7 +86,6 @@
 		</div>
 	</section>
 	<!-- Hero Section End -->
-
 	<!-- Breadcrumb Section Begin -->
 	<section class="breadcrumb-section set-bg"
 		data-setbg="../resources/image/product/breadcrumb.jpg">
@@ -140,11 +140,7 @@
 								xem: ${views }</span>
 						</div>
 						<div class="product__details__price">${book.price }</div>
-						<p>Mauris blandit aliquet elit, eget tincidunt nibh pulvinar
-							a. Vestibulum ac diam sit amet quam vehicula elementum sed sit
-							amet dui. Sed porttitor lectus nibh. Vestibulum ac diam sit amet
-							quam vehicula elementum sed sit amet dui. Proin eget tortor
-							risus.</p>
+						<p>${book.note }.</p>
 						<div class="product__details__quantity">
 							<div class="quantity">
 								<div class="pro-qty">
@@ -155,10 +151,10 @@
 						<a href="#" class="primary-btn">ADD TO CARD</a> <a href="#"
 							class="heart-icon"><span class="icon_heart_alt"></span></a>
 						<ul>
-							<li><b>Availability</b> <span>In Stock</span></li>
-							<li><b>Shipping</b> <span>01 day shipping. <samp>Free
-										pickup today</samp></span></li>
-							<li><b>Weight</b> <span>0.5 kg</span></li>
+							<li><b>Tải sách</b> <span><a href="${book.link }">Tải</a></span></li>
+							<li><b>Review</b> <span><a href="/review/${book.name }&${book.id}">Review</a></span></li>
+							<li><b>Gửi đường dẫn</b> <span><a href="updating">Gửi
+										link tải đến bạn bè (Email)</a></span></li>
 							<li><b>Share on</b>
 								<div class="share">
 									<a href="#"><i class="fa fa-facebook"></i></a> <a href="#"><i
@@ -197,11 +193,13 @@
 							<div class="tab-pane" id="tabs-3" role="tabpanel">
 								<div class="product__details__tab__desc">
 									<c:forEach var="cm" items="${listComments }">
-											<b>Người lạ</b><br/>
+										<b>Người lạ</b>
+										<br />
 											${cm.content }
 											(Thời gian ${cm.updatedAt })
 											<button onClick="editComment('${cm.id}');">Chỉnh sửa</button>
-										<a href="/delete-comment/${cm.id }">Xóa bình luận</a><br/>
+										<a href="/delete-comment/${cm.id }">Xóa bình luận</a>
+										<br />
 									</c:forEach>
 
 									<hr />
@@ -221,8 +219,8 @@
 				</div>
 			</div>
 		</div>
+		<!-- Product Details Section End -->
 	</section>
-	<!-- Product Details Section End -->
 
 	<!-- Related Product Section Begin -->
 	<section class="related-product">
@@ -249,7 +247,8 @@
 								</div>
 								<div class="product__item__text">
 									<h6>
-										<a href="/${book.name }&${book.id}&${book.branch.id }" class="text">${book.name }</a>
+										<a href="/${book.name }&${book.id}&${book.branch.id }"
+											class="text">${book.name }</a>
 									</h6>
 									<h5>${book.price }</h5>
 								</div>
@@ -264,7 +263,6 @@
 	<footer class="footer spad">
 		<jsp:include page="footer.jsp" />
 	</footer>
-
 	<script>
 		function editComment(id) {
 			var url = "/edit-comment/" + id;

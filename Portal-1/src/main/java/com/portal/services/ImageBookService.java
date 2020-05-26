@@ -38,6 +38,10 @@ public class ImageBookService {
 		repo.deleteById(id);
 	}
 	
+	public List<ImageBook> findByBookID(int id){
+		return repo.findByBookID(id);
+	}
+	
 	/**
 	 * Hàm dùng để thêm ảnh vào thư mục
 	 * @param imageFile

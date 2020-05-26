@@ -27,6 +27,12 @@ public class ImageBook {
 	
 	public ImageBook() {}
 	
+	public ImageBook(String name, int main, Book book) {
+		this.name = name;
+		this.main = main;
+		this.book = book;
+	}
+
 	public int getId() {
 		return id;
 	}

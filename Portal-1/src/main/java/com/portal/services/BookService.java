@@ -1,5 +1,9 @@
 package com.portal.services;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -14,6 +18,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.portal.Repositories.IBookRepository;
 import com.portal.models.Book;
@@ -83,12 +88,20 @@ public class BookService {
 			listBooks = findByLikeName(name.trim(), PageRequest.of(page - 1, 12, Sort.by("price").descending()));
 		} else if (request.equalsIgnoreCase("price-ascending")) {
 			listBooks = findByLikeName(name.trim(), PageRequest.of(page - 1, 12, Sort.by("price").ascending()));
-		} else if(request.equalsIgnoreCase("views")) {
+		} else if (request.equalsIgnoreCase("views")) {
 			listBooks = findByLikeName(name.trim(), PageRequest.of(page - 1, 12, Sort.by("views").descending()));
-		}else {
+		} else {
 			listBooks = findByLikeName(name.trim(), PageRequest.of(page - 1, 12));
 		}
 		return listBooks;
+	}
+
+	public void savePDF(MultipartFile imageFile) throws IOException {
+		String folder = "E:\\Eclipse\\github-portal-1\\Portal-1\\src\\main\\webapp\\resources\\pdf\\";
+		byte[] bytes = imageFile.getBytes();
+		Path path = Paths.get(folder + imageFile.getOriginalFilename());
+		Files.write(path, bytes);
+
 	}
 
 	/**

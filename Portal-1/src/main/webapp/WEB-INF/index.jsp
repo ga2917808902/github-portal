@@ -60,7 +60,8 @@
 						</div>
 						<ul>
 							<c:forEach var="item" items="${listCategories }">
-								<li><a href="/contents/${item[1] }&${item[0] }"><b>${item[1]}</b> (${item[2] })</a></li>
+								<li><a href="/contents/${item[1] }&${item[0] }"><b>${item[1]}</b>
+										(${item[2] })</a></li>
 							</c:forEach>
 						</ul>
 					</div>
@@ -72,7 +73,8 @@
 								<div class="hero__search__categories">
 									All Categories <span class="arrow_carrot-down"></span>
 								</div>
-								<input type="text" name="q" placeholder="Bạn cần tìm sản phẩm nào?">
+								<input type="text" name="q"
+									placeholder="Bạn cần tìm sản phẩm nào?">
 								<button type="submit" class="site-btn">TÌM KIẾM</button>
 							</form>
 						</div>
@@ -97,7 +99,7 @@
 	<!-- Top product views  Section Begin -->
 	<section class="categories">
 		<div class="container">
-		<br/><br/><br/>
+			<br /> <br /> <br />
 			<h5 style="color: #7fad39">
 				<i>Sản phẩm mới nhất</i>
 			</h5>
@@ -113,7 +115,8 @@
 								</c:if>
 							</c:forEach>
 							<p>
-								<a href="${book.name }&${book.id}&${book.branch.id }" class="text">${book.name }</a>
+								<a href="${book.name }&${book.id}&${book.branch.id }"
+									class="text">${book.name }</a>
 							</p>
 						</div>
 					</c:forEach>
@@ -159,7 +162,8 @@
 							</c:forEach>
 							<div class="featured__item__text">
 								<h6>
-									<a href="${book.name }&${book.id}&${book.branch.id }" class="text">${book.name }</a>
+									<a href="${book.name }&${book.id}&${book.branch.id }"
+										class="text">${book.name }</a>
 								</h6>
 								<h5>${book.price }</h5>
 							</div>
@@ -457,7 +461,8 @@
 								<li><i class="fa fa-comment-o"></i> 5</li>
 							</ul>
 							<h5>
-								<a href="#" class="text">Sách nào tốt khi bắt đầu học lập trình?</a>
+								<a href="#" class="text">Sách nào tốt khi bắt đầu học lập
+									trình?</a>
 							</h5>
 							<p>Lập trình thường sẽ có rất nhiều ngôn ngữ lập trình như
 								Java, PHP, C#...</p>
@@ -467,11 +472,11 @@
 			</div>
 		</div>
 	</section>
+	
 	<!-- Blog Section End -->
 	<footer class="footer spad">
 		<jsp:include page="footer.jsp" />
 	</footer>
-
 
 	<!-- Js Plugins -->
 	<script src="../resources/js/jquery-3.3.1.min.js"></script>

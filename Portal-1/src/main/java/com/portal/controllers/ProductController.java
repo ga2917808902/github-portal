@@ -3,7 +3,6 @@ package com.portal.controllers;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.time.LocalDateTime;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,11 +18,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.portal.configs.PDFToImage;
 import com.portal.models.Book;
 import com.portal.models.Comment;
+import com.portal.models.ImageBook;
 import com.portal.services.BookService;
 import com.portal.services.CategoryService;
 import com.portal.services.CommentService;
+import com.portal.services.ImageBookService;
 
 @Controller
 public class ProductController {
@@ -37,6 +39,12 @@ public class ProductController {
 	@Autowired
 	CategoryService categoryService;
 
+	@Autowired
+	ImageBookService imageBookService;
+	
+	@Autowired
+	PDFToImage pdfToImage;
+	
 	static LocalDateTime CREATED_AT;
 
 	@GetMapping("{name}&{id}&{branchId}")
@@ -99,9 +107,20 @@ public class ProductController {
 		return "redirect:/" + URLEncoder.encode(url, "UTF-8").replace("+", "%20");
 	}
 
-	@RequestMapping("updating")
+	@GetMapping("updating")
 	public String updating() {
 		return "updating";
+	}
+	
+	@GetMapping("review/{name}&{id}")
+	public String review(ModelMap model, @PathVariable("name") String name, @PathVariable("id") int id) {
+		List<Object[]> listCategories = categoryService.contents();
+		List<ImageBook> listImageBooks = imageBookService.findByBookID(id);
+		//pdfToImage.process(listImageBooks, "", id);
+		model.addAttribute("listImageBooks", listImageBooks);
+		model.addAttribute("listCategories", listCategories);
+		
+		return "review";
 	}
 
 	@RequestMapping("back")
