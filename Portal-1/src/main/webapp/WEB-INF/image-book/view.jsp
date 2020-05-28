@@ -26,8 +26,7 @@ img {
 		<nav>
 			<jsp:include page="../menu.jsp" />
 		</nav>
-		<br/>
-		<a href="/image-book/new">Thêm ảnh</a>
+		<br /> <a href="/image-book/new">Thêm ảnh</a>
 		<table border="1">
 			<tr>
 				<th>Hình ảnh</th>
@@ -36,9 +35,26 @@ img {
 			</tr>
 			<c:forEach var="item" items="${listImageBooks }">
 				<tr>
-					<td><img src="../resources/image/product/${item.name }" /></td>
+					<c:choose>
+						<c:when test="${item.main == 2}">
+							<td><img src="../resources/image/pdf/${item.name }" /></td>
+						</c:when>
+						<c:otherwise>
+							<td><img src="../resources/image/product/${item.name }" /></td>
+						</c:otherwise>
+					</c:choose>
 					<td>${item.book.name }</td>
-					<td>${item.main == 1 ? 'Ảnh chính' : 'Ảnh phụ'}</td>
+					<c:choose>
+						<c:when test="${item.main == 1}">
+							<td>Ảnh chính</td>
+						</c:when>
+						<c:when test="${item.main == 0}">
+							<td>Ảnh phụ</td>
+						</c:when>
+						<c:otherwise>
+							<td>Ảnh review</td>
+						</c:otherwise>
+					</c:choose>
 					<td><a href="/image-book/edit/${item.id }">Sửa</a></td>
 					<td><a href="/image-book/delete/${item.id }">Xóa</a></td>
 				</tr>

@@ -114,13 +114,16 @@ public class BookService {
 
 	public List<Book> recommendBooks(int branchId, int bookId) {
 		List<Book> recommendBooks = repo.findByBranchOrderByIdAsc(new Branch(branchId));
-		int currentId = algorithmForRandomBook(recommendBooks, bookId);
-		recommendBooks.remove(currentId);
-		Collections.shuffle(recommendBooks);
-		int random = 4;
-		List<Book> randomBooks = recommendBooks.subList(0, random);
-
-		return randomBooks;
+		if(recommendBooks.size() > 10) {
+			int currentId = algorithmForRandomBook(recommendBooks, bookId);
+			recommendBooks.remove(currentId);
+			Collections.shuffle(recommendBooks);
+			int random = 4;
+			List<Book> randomBooks = recommendBooks.subList(0, random);
+			return randomBooks;
+		}else {
+			return null;
+		}
 	}
 
 	/**

@@ -24,6 +24,7 @@ public class Book {
 	private String name;
 	private String price;
 	private String note;
+	private String source;
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "publishing_id")
 	private Publishing publishing;
@@ -166,5 +167,13 @@ public class Book {
 
 	public void setLink(String link) {
 		this.link = link;
+	}
+	
+	public String getSource() {
+		return source;
+	}
+
+	public void setSource(String source) {
+		this.source = source;
 	}
 }

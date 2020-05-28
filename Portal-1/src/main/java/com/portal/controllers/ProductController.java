@@ -55,7 +55,9 @@ public class ProductController {
 		List<Comment> listComments = commentService.findByBook(new Book(id));
 		List<Object[]> listCategories = categoryService.contents();
 		List<Book> recommendBooks = bookService.recommendBooks(branchId, id);
-		model.addAttribute("recommendBooks", recommendBooks);
+		if(recommendBooks != null) {
+			model.addAttribute("recommendBooks", recommendBooks);
+		}
 		model.addAttribute("listCategories", listCategories);
 		model.addAttribute("listComments", listComments);
 		model.addAttribute("book", book);
@@ -112,11 +114,11 @@ public class ProductController {
 		return "updating";
 	}
 	
-	@GetMapping("review/{name}&{id}")
-	public String review(ModelMap model, @PathVariable("name") String name, @PathVariable("id") int id) {
+	@GetMapping("review/{source}&{id}")
+	public String review(ModelMap model, @PathVariable("id") int id, @PathVariable("source") String source) {
 		List<Object[]> listCategories = categoryService.contents();
 		List<ImageBook> listImageBooks = imageBookService.findByBookID(id);
-		//pdfToImage.process(listImageBooks, "", id);
+		pdfToImage.process(listImageBooks, source, id);
 		model.addAttribute("listImageBooks", listImageBooks);
 		model.addAttribute("listCategories", listCategories);
 		

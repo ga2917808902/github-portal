@@ -111,7 +111,7 @@
 							<c:forEach var="image" items="${book.imageBook }">
 								<c:if test="${image.main == 1 }">
 									<div class="categories__item set-bg"
-										data-setbg="../resources/image/product/${image.name }"></div>
+										data-setbg=""><img src="../resources/image/product/${image.name }" width="210px" height="210px"/></div>
 								</c:if>
 							</c:forEach>
 							<p>
@@ -216,7 +216,7 @@
 									items="${recentlyBooks }" var="book">
 									<c:forEach var="image" items="${book.imageBook }">
 										<c:if test="${image.main == 1 }">
-											<a href="#" class="latest-product__item">
+											<a href="${book.name }&${book.id}&${book.branch.id }" class="latest-product__item">
 												<div class="latest-product__item__pic">
 													<img src="../resources/image/product/${image.name }">
 												</div>

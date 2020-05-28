@@ -8,12 +8,7 @@
 <head>
 <meta charset="UTF-8">
 <base href="${pageContext.servletContext.contextPath}/">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
 <script type="text/javascript" src="resources/js/jquery-3.4.1.min.js"></script>
 <script src="../resources/bootstrap/jquery-1.10.2.min.js"></script>
 <script src="../resources/bootstrap/bootstrap.min.js"></script>
@@ -72,40 +67,80 @@
 				</c:forEach>
 			</table>
 		</div>
-		<ul class="pagination pagination">
- 			<c:choose>
-				<c:when test="${current == 1 }">
-				</c:when>
-				<c:otherwise>
-					<li><a href="/book/?page=${1 }">First</a></li>
-					<li><a href="/book/?page=${current - 1 }">Prev</a></li>
-				</c:otherwise>
-			</c:choose>
+		<c:choose>
+			<c:when test="${not empty isSearch }">
+				<ul class="pagination pagination">
+					<c:choose>
+						<c:when test="${current == 1 }">
+						</c:when>
+						<c:otherwise>
+							<li><a href="/book/${cUrl }&page=${1 }">First</a></li>
+							<li><a href="/book/${cUrl }&page=${current - 1 }">Prev</a></li>
+						</c:otherwise>
+					</c:choose>
 
-			<c:forEach begin="${begin }" end="${end }" var="i">
-				<c:choose>
-					<c:when test="${i == current }">
-						<li class="active"><a href="/book/?page=${i }">${i }</a></li>
-					</c:when>
-					<c:otherwise>
-						<li ><a href="/book/?page=${i }">${i}</a></li>
-					</c:otherwise>
-				</c:choose>
-			</c:forEach>
+					<c:forEach begin="${begin }" end="${end }" var="i">
+						<c:choose>
+							<c:when test="${i == current }">
+								<li class="active"><a href="/book/${cUrl }&page=${i }">${i }</a></li>
+							</c:when>
+							<c:otherwise>
+								<li><a href="/book/${cUrl }&page=${i }">${i}</a></li>
+							</c:otherwise>
+						</c:choose>
+					</c:forEach>
 
-			<c:choose>
-				<c:when test="${current == 1 }">
-					<li><a href="/book/?page=${current + 1}">Next</a></li>
-					<li><a href="/book/?page=${last }">Last</a></li>
-				</c:when>
-				<c:when test="${current == last }">
-				</c:when>
-				<c:otherwise>
-					<li><a href="/book/?page=${current + 1}">Next</a></li>
-					<li><a href="/book/?page=${last }">Last</a></li>
-				</c:otherwise>
-			</c:choose>
-		</ul>
+					<c:choose>
+						<c:when test="${current == 1 }">
+							<li><a href="/book/${cUrl }&page=${current + 1}">Next</a></li>
+							<li><a href="/book/${cUrl }&page=${last }">Last</a></li>
+						</c:when>
+						<c:when test="${current == last }">
+						</c:when>
+						<c:otherwise>
+							<li><a href="/book/${cUrl }&page=${current + 1}">Next</a></li>
+							<li><a href="/book/${cUrl }&page=${last }">Last</a></li>
+						</c:otherwise>
+					</c:choose>
+				</ul>
+			</c:when>
+			<c:otherwise>
+				<ul class="pagination pagination">
+					<c:choose>
+						<c:when test="${current == 1 }">
+						</c:when>
+						<c:otherwise>
+							<li><a href="/book/?page=${1 }">First</a></li>
+							<li><a href="/book/?page=${current - 1 }">Prev</a></li>
+						</c:otherwise>
+					</c:choose>
+
+					<c:forEach begin="${begin }" end="${end }" var="i">
+						<c:choose>
+							<c:when test="${i == current }">
+								<li class="active"><a href="/book/?page=${i }">${i }</a></li>
+							</c:when>
+							<c:otherwise>
+								<li><a href="/book/?page=${i }">${i}</a></li>
+							</c:otherwise>
+						</c:choose>
+					</c:forEach>
+
+					<c:choose>
+						<c:when test="${current == 1 }">
+							<li><a href="/book/?page=${current + 1}">Next</a></li>
+							<li><a href="/book/?page=${last }">Last</a></li>
+						</c:when>
+						<c:when test="${current == last }">
+						</c:when>
+						<c:otherwise>
+							<li><a href="/book/?page=${current + 1}">Next</a></li>
+							<li><a href="/book/?page=${last }">Last</a></li>
+						</c:otherwise>
+					</c:choose>
+				</ul>
+			</c:otherwise>
+		</c:choose>
 
 		<footer>FOOTER</footer>
 	</div>

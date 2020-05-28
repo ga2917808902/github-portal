@@ -1,8 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -124,8 +122,10 @@
 						</c:forEach>
 						<div class="product__details__pic__slider owl-carousel">
 							<c:forEach var="image" items="${book.imageBook }">
-								<img data-imgbigurl="../resources/image/product/${image.name }"
-									src="../resources/image/product/${image.name }" alt="">
+								<c:if test="${image.main == 0 }">
+									<img data-imgbigurl="../resources/image/product/${image.name }"
+										src="../resources/image/product/${image.name }" alt="">
+								</c:if>
 							</c:forEach>
 						</div>
 					</div>
@@ -141,18 +141,12 @@
 						</div>
 						<div class="product__details__price">${book.price }</div>
 						<p>${book.note }.</p>
-						<div class="product__details__quantity">
-							<div class="quantity">
-								<div class="pro-qty">
-									<input type="text" value="1">
-								</div>
-							</div>
-						</div>
-						<a href="#" class="primary-btn">ADD TO CARD</a> <a href="#"
+						<a href="/review/${book.source}&${book.id}" class="primary-btn">REVIEW SÁCH</a> <a href="#"
 							class="heart-icon"><span class="icon_heart_alt"></span></a>
 						<ul>
 							<li><b>Tải sách</b> <span><a href="${book.link }">Tải</a></span></li>
-							<li><b>Review</b> <span><a href="/review/${book.name }&${book.id}">Review</a></span></li>
+							<li><b>Review</b> <span><a
+									href="/review/${book.source}&${book.id}">Review</a></span></li>
 							<li><b>Gửi đường dẫn</b> <span><a href="updating">Gửi
 										link tải đến bạn bè (Email)</a></span></li>
 							<li><b>Share on</b>

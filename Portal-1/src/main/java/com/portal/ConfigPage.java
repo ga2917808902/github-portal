@@ -8,6 +8,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class ConfigPage<T> {
 
+	/**
+	 * Hàm dùng để phân trang
+	 * @param page ex: Page<Book>
+	 * @return
+	 */
 	public Map<String, Integer> pagination(Page<T> page) {
 		Map<String, Integer> map = new TreeMap<String, Integer>();
 		int totalPages = page.getTotalPages();

@@ -85,9 +85,27 @@
 			</div>
 		</div>
 	</section>
+	<!-- Breadcrumb Section Begin -->
+	<section class="breadcrumb-section set-bg"
+		data-setbg="../resources/image/product/breadcrumb.jpg">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12 text-center">
+					<div class="breadcrumb__text">
+						<h2>${book.name }</h2>
+						<div class="breadcrumb__option">
+							<a href="">Trang chủ</a>
+							<span>${book.name }</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Breadcrumb Section End -->
 	<section>
 		<!-- Top product views  Section Begin -->
-		<br/>
+		<br />
 		<section class="categories">
 			<div class="container">
 				<h5 style="color: red">
@@ -99,7 +117,7 @@
 						<c:forEach var="imageBook" items="${listImageBooks }">
 							<div class="col-lg-3">
 								<c:if test="${imageBook.main == 2 }">
-										<img src="../resources/image/pdf/${imageBook.name }"/>
+									<img src="../resources/image/pdf/${imageBook.name }" />
 								</c:if>
 							</div>
 						</c:forEach>
@@ -107,7 +125,10 @@
 				</div>
 			</div>
 		</section>
-	</section><br/><br/><br/>
+	</section>
+	<br />
+	<br />
+	<br />
 	<footer class="footer spad">
 		<jsp:include page="footer.jsp" />
 	</footer>

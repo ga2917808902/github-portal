@@ -1,5 +1,6 @@
 package com.portal.controllers;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -64,12 +66,12 @@ public class BookController {
 
 	@Autowired
 	BookAuthorService bookAuthorService;
-	
+
 	@Autowired
 	ConfigPage<Book> configPage;
 
 	static ObjectMapper mapper = new ObjectMapper();
-	
+
 	@GetMapping(value = { "index", "/" })
 	public String index(ModelMap model, @RequestParam(defaultValue = "1") int page) {
 		Page<Book> listBooks = service.findAll(PageRequest.of(page - 1, 10));
@@ -95,7 +97,13 @@ public class BookController {
 	}
 
 	@PostMapping("save")
-	public String save(@ModelAttribute("book") Book book, @RequestParam List<Integer> listIdAuthor) {
+	public String save(@ModelAttribute("book") Book book, @RequestParam List<Integer> listIdAuthor,
+			@RequestParam("sourceFile") MultipartFile sourceFile) throws IOException {
+		if (sourceFile.getOriginalFilename().length() != 0) {
+			String source = sourceFile.getOriginalFilename();
+			book.setSource(source);
+			service.savePDF(sourceFile);
+		}
 		LocalDateTime time = LocalDateTime.now();
 		book.setCreatedAt(time);
 		book.setUpdatedAt(time);
@@ -113,7 +121,15 @@ public class BookController {
 	}
 
 	@PostMapping("update")
-	public String update(@ModelAttribute("book") Book book) {
+	public String update(@ModelAttribute("book") Book book, @RequestParam("sourceFile") MultipartFile sourceFile,
+			@RequestParam("tempSource") String tempSource) throws IOException {
+		if (sourceFile.getOriginalFilename().length() == 0) {
+			book.setSource(tempSource);
+		} else {
+			String source = sourceFile.getOriginalFilename();
+			book.setSource(source);
+			service.savePDF(sourceFile);
+		}
 		LocalDateTime time = LocalDateTime.now();
 		book.setUpdatedAt(time);
 		service.saveOrUpdate(book);
@@ -130,11 +146,20 @@ public class BookController {
 		List<Author> authors = authorService.listAuthors(listAuthors);
 		model.addAttribute("listAuthors", mapper.writeValueAsString(listAuthors));
 		model.addAttribute("authors", mapper.writeValueAsString(authors));
+		model.addAttribute("source", book.get().getSource());
 		model.addAttribute("id", id);
 		model.addAttribute("book", book);
 
 		return "book/edit";
 	}
+
+	/**
+	 * Hàm dùng để chọn thêm tác giả
+	 * 
+	 * @param id
+	 * @param listId
+	 * @return
+	 */
 
 	@GetMapping("transfer-data/{id}")
 	public String transferData(@PathVariable("id") int id, @RequestParam List<Integer> listId) {
@@ -161,16 +186,18 @@ public class BookController {
 
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
-	
+
 	@GetMapping("search")
 	public String searchBook(ModelMap model, @RequestParam("q") String name,
 			@RequestParam(defaultValue = "1") int page) {
 		Page<Book> listBooks = service.findByLikeName(name.trim(), PageRequest.of(page - 1, 10));
-		int totalPages = listBooks.getTotalPages();
-		if (totalPages > 0) {
-			List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages).boxed().collect(Collectors.toList());
-			model.addAttribute("pageNumbers", pageNumbers);
-		}
+		Map<String, Integer> pages = configPage.pagination(listBooks);
+		model.addAttribute("isSearch", name);
+		model.addAttribute("cUrl", "search?q=" + name);
+		model.addAttribute("begin", pages.get("begin"));
+		model.addAttribute("end", pages.get("end"));
+		model.addAttribute("last", pages.get("last"));
+		model.addAttribute("current", pages.get("current"));
 		model.addAttribute("listBooks", listBooks);
 
 		return "book/index";

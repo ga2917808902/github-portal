@@ -5,7 +5,6 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -85,5 +84,12 @@ public class HomeController {
 		model.addAttribute("listBooks", listBooks);
 		
 		return "search";
+	}
+	
+	@GetMapping("contact")
+	public String contact(ModelMap model) {
+		List<Object[]> listCategories = categoryService.contents();
+		model.addAttribute("listCategories", listCategories);
+		return "contact";
 	}
 }

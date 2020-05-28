@@ -39,7 +39,7 @@
 		<nav>
 			<jsp:include page="../menu.jsp" />
 		</nav>
-		<form:form action="book/update" method="post" modelAttribute="book">
+		<form:form action="book/update" method="post" modelAttribute="book" enctype="multipart/form-data">
 			<form:hidden path="id" readonly="true" />
 			<div>
 				<label>Tên sách</label>
@@ -56,6 +56,11 @@
 			<div>
 				<label>Link</label>
 				<form:input path="link" />
+			</div>
+			<div>
+				<label>Source</label> <input type="file" name="sourceFile" /> <input
+					type="hidden" name="tempSource"
+					value="<%=request.getAttribute("source")%>" />
 			</div>
 			<div>
 				<label>Nhà xuất bản</label>
@@ -82,8 +87,8 @@
 			<form:hidden path="updatedAt" />
 
 			<div>
-				<label>Tác giả</label><br/>
-				<a class="btn btn-info" onclick="openPopup();">Chọn thêm tác giả</a>
+				<label>Tác giả</label><br /> <a class="btn btn-info"
+					onclick="openPopup();">Chọn thêm tác giả</a>
 
 				<div style="width: 380px">
 					<table id="myTable" border="1">
@@ -117,7 +122,7 @@
 											<th>Tên tác giả</th>
 											<th>Chọn</th>
 										</tr>
-									</thead>	
+									</thead>
 								</table>
 								<button>Save</button>
 							</form>
@@ -134,53 +139,70 @@
 			$("#ModalTitle").html("Add New Category");
 			$("#MyModal").modal();
 		}
-		
-		function removeAuthor(id){
+
+		function removeAuthor(id) {
 			$.ajax({
-				type: "POST",
-				url: "/book/remove-author",
-				data: {
+				type : "POST",
+				url : "/book/remove-author",
+				data : {
 					'listIdAuthor' : id
 				},
-				success: function(data){
-					window.location.href = "http://localhost:8080/book/edit/" + '${id}';
+				success : function(data) {
+					window.location.href = "http://localhost:8080/book/edit/"
+							+ '${id}';
 				}
 			})
 		}
-		
+
 		//Datatable author ngoài popup
-		$(document).ready(function(){
-			var listData = eval('${listAuthors}');
-			$('#myTable').DataTable({
-				aaData : listData,
-				aoColumns : [
-					{data: "name"},
-					{
-						data: "id", 
-						mRender: function(data){
-							return '<input type="checkbox" name="listIdAuthor" value="' + data + '" onClick="removeAuthor(' + data + ');"/>';
-						}	
-					},
-				]
-			});
-		});
-		
+		$(document)
+				.ready(
+						function() {
+							var listData = eval('${listAuthors}');
+							$('#myTable')
+									.DataTable(
+											{
+												aaData : listData,
+												aoColumns : [
+														{
+															data : "name"
+														},
+														{
+															data : "id",
+															mRender : function(
+																	data) {
+																return '<input type="checkbox" name="listIdAuthor" value="'
+																		+ data
+																		+ '" onClick="removeAuthor('
+																		+ data
+																		+ ');"/>';
+															}
+														}, ]
+											});
+						});
+
 		//Datatable Author trong popup
-		$(document).ready(function(){
-			var data = eval('${authors}');
-			$('#myTable-popup').DataTable({
-				aaData : data,
-				aoColumns : [
-					{data: "name"},
-					{
-						data: "id", 
-						mRender: function(data){
-							return '<input type="checkbox" name="listId" value="' + data + '" />';
-						}	
-					},
-				]
-			});
-		});
+		$(document)
+				.ready(
+						function() {
+							var data = eval('${authors}');
+							$('#myTable-popup')
+									.DataTable(
+											{
+												aaData : data,
+												aoColumns : [
+														{
+															data : "name"
+														},
+														{
+															data : "id",
+															mRender : function(
+																	data) {
+																return '<input type="checkbox" name="listId" value="' + data + '" />';
+															}
+														}, ]
+											});
+						});
 	</script>
 </body>
 </html>

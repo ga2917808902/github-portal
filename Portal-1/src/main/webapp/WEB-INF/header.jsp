@@ -13,7 +13,7 @@
 						<ul>
 							<li><i class="fa fa-envelope"></i>
 								nguyenthanhhuy006@gmail.com</li>
-							<li>Miễn phí vận chuyển khi mua trên 1 triệu</li>
+							
 						</ul>
 					</div>
 				</div>
@@ -64,7 +64,7 @@
 								<li><a href="./blog-details.html">Blog Details</a></li>
 							</ul></li>
 						<li><a href="./blog.html">Blog</a></li>
-						<li><a href="./contact.html">Liên hệ</a></li>
+						<li><a href="contact">Liên hệ</a></li>
 					</ul>
 				</nav>
 			</div>
@@ -74,9 +74,6 @@
 						<li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
 						<li><a href="#"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
 					</ul>
-					<div class="header__cart__price">
-						Tổng tiền: <span>$150.00</span>
-					</div>
 				</div>
 			</div>
 		</div>

@@ -39,7 +39,8 @@
 		<nav>
 			<jsp:include page="../menu.jsp" />
 		</nav>
-		<form:form action="book/save" method="post" modelAttribute="book">
+		<form:form action="book/save" method="post" modelAttribute="book"
+			enctype="multipart/form-data">
 			<form:hidden path="id" readonly="true" />
 			<div>
 				<label>Tên sách</label>
@@ -56,6 +57,9 @@
 			<div>
 				<label>Link</label>
 				<form:input path="link" />
+			</div>
+			<div>
+				<label>Source</label> <input type="file" name="sourceFile" />
 			</div>
 			<div>
 				<label>Nhà xuất bản</label>
@@ -81,7 +85,7 @@
 			<form:hidden path="updatedAt" />
 
 			<div>
-				<label>Tác giả</label><br/>
+				<label>Tác giả</label><br />
 				<div style="width: 380px">
 					<table id="myTable" border="1">
 						<thead>
@@ -105,23 +109,29 @@
 			$("#ModalTitle").html("Add New Category");
 			$("#MyModal").modal();
 		}
-		
+
 		//Datatable author ngoài popup
-		$(document).ready(function(){
-			var listData = eval('${listAuthors}');
-			$('#myTable').DataTable({
-				aaData : listData,
-				aoColumns : [
-					{data: "name"},
-					{
-						data: "id", 
-						mRender: function(data){
-							return '<input type="checkbox" name="listIdAuthor" value="' + data + '" />';
-						}	
-					},
-				]
-			});
-		});
+		$(document)
+				.ready(
+						function() {
+							var listData = eval('${listAuthors}');
+							$('#myTable')
+									.DataTable(
+											{
+												aaData : listData,
+												aoColumns : [
+														{
+															data : "name"
+														},
+														{
+															data : "id",
+															mRender : function(
+																	data) {
+																return '<input type="checkbox" name="listIdAuthor" value="' + data + '" />';
+															}
+														}, ]
+											});
+						});
 	</script>
 </body>
 </html>
